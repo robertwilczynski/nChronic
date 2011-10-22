@@ -1,0 +1,2 @@
+REM Add you console2 directory to path to be able to start it with this bat file (assuming apropriate tabs are defined in console2)
+start "" "console.exe" -w "chronic" -t Git-Bash -d %CD% -t VS08 -d %CD% -t PowerShell -d %CD%

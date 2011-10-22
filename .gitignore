@@ -1,0 +1,42 @@
+*.user
+*.dep
+*.aps
+*.vbw
+*.suo
+*.obj
+*.ncb
+*.plg
+*.bsc
+*.ilk 
+*.exp
+*.sbr
+*.opt
+*.idb
+*.pch
+*.res
+*.user
+*.sln.cache
+
+# ============== Build artifacts
+# Source/*/bin/ - why the hell doesn't this work?
+# Source/*/obj/ - why the hell doesn't this work?
+
+# below will affect bins and objs in tools too - that's why this has been added to Source/.gitignore for now
+#*\bin
+#*\obj
+
+# ============== Resharper
+
+*.resharper
+*\_ReSharper*
+*.resharperoptions
+*_ReSharper*
+
+# ============== Visual Source Safe
+*.vspscc 
+*.vsssccc 
+*.scc 
+
+# ============== Coderush/!Refactor
+
+# ============== Project specific ignores
