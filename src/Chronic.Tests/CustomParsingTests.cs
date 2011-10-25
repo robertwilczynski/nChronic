@@ -27,7 +27,6 @@ namespace Chronic.Tests
             Assert.Equal(Time.New(2006, 8, 23, 14), result);
         }
 
-
         [Fact]
         public void _7_days_from_now_at_midnight()
         {
@@ -36,9 +35,23 @@ namespace Chronic.Tests
         }
 
         [Fact]
+        public void seven_days_from_now_at_midnight()
+        {
+            var result = Parse(" seven days from now at midnight").ToTime();
+            Assert.Equal(Time.New(2006, 8, 24), result);
+        }
+
+        [Fact]
         public void _2_weeks_ago()
         {
             var result = Parse("2 weeks ago").ToTime();
+            Assert.Equal(Time.New(2006, 8, 02, 14), result);
+        }
+
+        [Fact]
+        public void two_weeks_ago()
+        {
+            var result = Parse("two weeks ago").ToTime();
             Assert.Equal(Time.New(2006, 8, 02, 14), result);
         }
     }

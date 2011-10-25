@@ -72,6 +72,7 @@
     <Compile Include="Handlers\SySmSdHandler.cs" />
     <Compile Include="Handlers\Utils.cs" />
     <Compile Include="Logger.cs" />
+    <Compile Include="Numerizer.cs" />
     <Compile Include="Range.cs" />
     <Compile Include="System\Time.cs" />
     <Compile Include="System\TokenCollectionExtensions.cs" />

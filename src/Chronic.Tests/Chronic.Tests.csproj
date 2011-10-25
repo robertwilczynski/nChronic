@@ -43,10 +43,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CollectionExtensionTests.cs" />
     <Compile Include="CustomParsingTests.cs" />
+    <Compile Include="NumerizerTests.cs" />
     <Compile Include="ParsingTests.cs" />
     <Compile Include="ParsingTestsBase.cs" />
     <Compile Include="SpanTests.cs" />
+    <Compile Include="LastCharactersTests.cs" />
     <Compile Include="TokenTests.cs" />
     <Compile Include="Utils\DummyTag.cs" />
     <Compile Include="when_parsing_complex_expressions.cs" />
