@@ -1,7 +1,7 @@
 using System;
 using Xunit;
 
-namespace System
+namespace Chronic.Tests
 {
     public static class DateTimeTestingExtensions
     {

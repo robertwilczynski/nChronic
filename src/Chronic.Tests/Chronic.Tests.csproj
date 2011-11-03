@@ -44,19 +44,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CollectionExtensionTests.cs" />
-    <Compile Include="CustomParsingTests.cs" />
+    <Compile Include="Parsing\to_do.cs" />
+    <Compile Include="CustomParsingTest.cs" />
     <Compile Include="NumerizerTests.cs" />
-    <Compile Include="ParsingTests.cs" />
-    <Compile Include="ParsingTestsBase.cs" />
+    <Compile Include="Parsing\works_when_parsing_pattern.cs" />
+    <Compile Include="ParsingTestBase.cs" />
     <Compile Include="SpanTests.cs" />
     <Compile Include="LastCharactersTests.cs" />
     <Compile Include="TokenTests.cs" />
+    <Compile Include="Utils\TestingExtensions.cs" />
     <Compile Include="Utils\DummyTag.cs" />
-    <Compile Include="when_parsing_complex_expressions.cs" />
-    <Compile Include="when_parsing_days_of_week.cs" />
-    <Compile Include="DateTimeTestingExtensions.cs" />
-    <Compile Include="when_parsing_basic_expressions.cs" />
+    <Compile Include="Parsing\when_parsing_complex_expressions.cs" />
+    <Compile Include="Parsing\when_parsing_days_of_week.cs" />
+    <Compile Include="Utils\DateTimeTestingExtensions.cs" />
+    <Compile Include="Parsing\when_parsing_basic_expressions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Parsing\when_parsing_now.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Chronic\Chronic.csproj">

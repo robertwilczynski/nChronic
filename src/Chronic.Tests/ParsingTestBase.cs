@@ -3,14 +3,14 @@ using System.Linq;
 
 namespace Chronic.Tests
 {
-    public class ParsingTestsBase
+    public abstract class ParsingTestsBase
     {
-        protected DateTime Now = Time.New(2006, 8, 16, 14, 0, 0);
+        protected abstract DateTime Now();
 
         protected Span Parse(string input)
         {
             Parser.IsDebugMode = true;
-            var parser = new Parser(new Options { Clock = () => Now });
+            var parser = new Parser(new Options { Clock = () => Now() });
             return parser.Parse(input);
         }
 
@@ -25,8 +25,8 @@ namespace Chronic.Tests
                         ? options.AmbiguousTimeRange 
                         : Options.DefaultAmbiguousTimeRange,
                     Clock = properties.Any(x => x.Name == "Clock") 
-                        ? (Func<DateTime>)options.Clock 
-                        : () => Now,
+                        ? (Func<DateTime>)options.Clock
+                        : () => Now(),
                     Context = properties.Any(x => x.Name == "Context") 
                         ? options.Context 
                         : Pointer.Type.None,

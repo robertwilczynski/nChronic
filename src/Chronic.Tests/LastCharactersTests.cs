@@ -37,8 +37,8 @@ namespace Chronic.Tests
             Assert.Equal("abcd ", "abcd ".LastCharacters(5));
         }
 
-        [Fact] public void
-            returns_requested_number_of_trailing_characters_when_input_is_longer_than_requested_number()
+        [Fact] 
+        public void returns_requested_number_of_trailing_characters_when_input_is_longer_than_requested_number()
         {
             Assert.Equal("c", "abc".LastCharacters(1));
             Assert.Equal("cd", "abcd".LastCharacters(2));

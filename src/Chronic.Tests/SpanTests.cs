@@ -1,17 +1,9 @@
-﻿using System;
-using Chronic;
-using Xunit;
+﻿using Xunit;
 
 namespace Chronic.Tests
 {
     public class SpanTests
     {
-        DateTime _now;
-
-
-        public void SetUp()
-        {
-        }
 
         [Fact]
         public void Width_returns_correct_value()

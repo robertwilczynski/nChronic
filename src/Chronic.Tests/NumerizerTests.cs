@@ -1,18 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Xunit;
 
 namespace Chronic.Tests
 {
     public class NumerizerTests
     {
-
         [Fact]
         public void non_ordinal_numbers_are_parsed_correctly()
         {
-            var cases = new object[,]
+            new object[,]
                 {
                     {"one", 1},
                     {"five", 5},
@@ -53,63 +49,78 @@ namespace Chronic.Tests
                     {"two hundred fifty thousand", 250000},
                     {"one million", 1000000},
                     {
-                        "one million two hundred fifty thousand and seven", 1250007
+                        "one million two hundred fifty thousand and seven",
+                        1250007
                     },
                     {"one billion", 1000000000},
                     {"one billion and one", 1000000001}
-                };
-            cases.ForEach<string, int>(
-                (s, r) =>
-                {
-                    string numerizedInput = null;
-                    try
+                }.ForEach<string, int>((phrase, expectedResult) =>
                     {
-                        numerizedInput = Numerizer.Numerize(s);
-                    }
-                    catch (Exception ex)
-                    {
-                        throw new Exception(String.Format("Test case: {0} => {1} :: {2}", s, r, ex.Message), ex);
-                    }
-
-                    int value = 0;
-                    if (Int32.TryParse(numerizedInput, out value))
-                    {
-                        Assert.Equal(r, value);
-                    }
-                    else
-                    {
-                        throw new Exception(String.Format(
-                            "Numerized input '{0}' is expected to be an integral number but it's not. Test case: {1} => {2}",
-                            numerizedInput, s, r));
-                    }
-                });
+                        var numerizedString = Numerize(expectedResult, phrase);
+                        var number = ConvertToNumber(expectedResult, numerizedString, phrase);
+                        Assert.Equal(expectedResult, number);                    
+                    });
         }
 
         [Fact]
         public void ordinal_numbers_are_parsed_correctly()
         {
-            new string[,] {
-                
-              { "first", "1st"},
-              { "second", "second"},
-              { "second day", "2nd day"},
-              { "second of may", "2nd of may"},
-              { "fifth", "5th"},
-              { "twenty third", "23rd"},
-              { "first day month two", "1st day month 2"}
-      }.ForEach<string, string>((p, r) =>
-                      {
-                          // Use pre_normalize here instead of Numerizer directly because
-                          // pre_normalize deals with parsing 'second' appropriately
-                          Assert.Equal(r, Parser.Normalize(r));
-                      });
+            new[,]
+                {
+                    {"first", "1st"},
+                    {"second", "second"},
+                    {"second day", "2nd day"},
+                    {"second of may", "2nd of may"},
+                    {"third of may", "2rd of may"},
+                    {"fifth", "5th"},
+                    {"twenty third", "23rd"},
+                    {"first day month two", "1st day month 2"}
+                }.ForEach<string, string>(
+                    (p, r) =>
+                    {
+                        // Use pre_normalize here instead of Numerizer directly because
+                        // pre_normalize deals with parsing 'second' appropriately
+                        Assert.Equal(r, Parser.Normalize(r));
+                    });
         }
 
         [Fact]
         public void test_edges()
         {
-            Assert.Equal("27 Oct 2006 7:30am", Numerizer.Numerize("27 Oct 2006 7:30am"));
+            Assert.Equal(
+                "27 Oct 2006 7:30am", Numerizer.Numerize("27 Oct 2006 7:30am"));
         }
 
+        static int ConvertToNumber(int r, string numerizedString, string s)
+        {
+            var value = 0;
+            if (!Int32.TryParse(numerizedString, out value))
+            {
+                throw new Exception(
+                    String.Format(
+                        "Numerized input '{0}' is expected to be an integral number but it's not. Test case: {1} => {2}",
+                        numerizedString,
+                        s,
+                        r));
+            }
+            return value;
+        }
+
+        static string Numerize(int r, string s)
+        {
+            string numerizedInput = null;
+            try
+            {
+                numerizedInput = Numerizer.Numerize(s);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(
+                    String.Format(
+                        "Test case: {0} => {1} :: {2}", s, r, ex.Message),
+                    ex);
+            }
+            return numerizedInput;
+        }
     }
 }

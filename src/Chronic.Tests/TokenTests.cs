@@ -1,5 +1,4 @@
-﻿using Chronic;
-using Chronic.Tests.Utils;
+﻿using Chronic.Tests.Utils;
 using Xunit;
 
 namespace Chronic.Tests

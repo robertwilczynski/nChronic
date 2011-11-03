@@ -7,6 +7,11 @@ namespace Chronic
         public static readonly int[] DaysInMonthInLeapYears = new int[] { 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
         public static readonly int[] DaysInMonthInRegularYears = new int[] { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
+        public static DateTime New(int year, int month, int day, TimeSpan time)
+        {
+            return New(year, month, day).Add(time);
+        }
+
         public static DateTime New(DateTime date, int hour = 0, int minute = 0, int second = 0)
         {
             return New(date.Year, date.Month, date.Day, hour, minute, second);
