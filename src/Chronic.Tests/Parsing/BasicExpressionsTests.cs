@@ -3,7 +3,7 @@ using Xunit;
 
 namespace Chronic.Tests.Parsing
 {
-    public class when_parsing_basic_expressions : ParsingTestsBase
+    public class BasicExpressionsTests : ParsingTestsBase
     {
         protected override DateTime Now()
         {

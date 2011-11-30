@@ -3,7 +3,7 @@ using Xunit;
 
 namespace Chronic.Tests.Parsing
 {
-    public class when_parsing_complex_expressions : ParsingTestsBase
+    public class ComplexExpressionsTests : ParsingTestsBase
     {
         static readonly DateTime Date = new DateTime(2011, 10, 18);
         static readonly TimeSpan TimeOfDay = new TimeSpan(15, 34, 44);

@@ -3,7 +3,7 @@ using Xunit;
 
 namespace Chronic.Tests.Parsing
 {
-    public class when_parsing_days_of_week : ParsingTestsBase
+    public class DaysOfWeekTests : ParsingTestsBase
     {
         protected override DateTime Now()
         {

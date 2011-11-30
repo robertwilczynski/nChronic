@@ -3,7 +3,7 @@ using Xunit;
 
 namespace Chronic.Tests.Parsing
 {
-    public class to_do : ParsingTestsBase
+    public class TODO : ParsingTestsBase
     {
         protected override DateTime Now()
         {

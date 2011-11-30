@@ -3,7 +3,7 @@ using Xunit;
 
 namespace Chronic.Tests.Parsing
 {
-    public class works_when_parsing_pattern : ParsingTestsBase
+    public class KnownPatternsParsingTests : ParsingTestsBase
     {
         protected override DateTime Now()
         {
@@ -133,27 +133,6 @@ namespace Chronic.Tests.Parsing
 
             Parse("may 32")
                 .AssertEquals(Time.New(2032, 5, 16, 12, 0, 0));
-        }
-
-        [Fact]
-        public void rdn_rmn_sd_t_tz_sy()
-        {
-            //Parse("Mon Apr 02 17:00:00 PDT 2007");
-            Assert.True(false, "not implemented");
-        }
-
-        [Fact]
-        public void sy_sm_sd_t_tz()
-        {
-            Assert.True(false, "not implemented");
-            //Parse("2011-07-03 22:11:35 +0100").AssertEquals(
-            //1309727495, Convert.ToInt32(time));
-
-            //Parse("2011-07-03 22:11:35 +01:00").AssertEquals(
-            //1309727495, Convert.ToInt32(time));
-
-            //Parse("2011-07-03 21:11:35 UTC").AssertEquals(
-            //1309727495, Convert.ToInt32(time));
         }
 
         [Fact]
