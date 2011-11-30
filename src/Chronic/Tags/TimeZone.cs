@@ -1,17 +1,9 @@
-using System.Text.RegularExpressions;
-
-namespace Chronic
+﻿namespace Chronic.Tags
 {
-    // TODO : scanning not implemented
-    public class TimeZone : Tag<object>
+    public class TimeZone : Tag<string>
     {
-        private static readonly Regex TIMEZONE_PATTERN = "[pmce][ds]t".Compile();
-        public static readonly object TZ = new object();
-
-        public TimeZone()
-            : base(null)
+        public TimeZone(string value) : base(value)
         {
-
         }
 
         public override string ToString()

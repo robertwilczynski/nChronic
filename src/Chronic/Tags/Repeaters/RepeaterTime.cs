@@ -105,6 +105,9 @@ namespace Chronic.Tags.Repeaters
                 var yesterdayMidnight = midnight.AddDays(-1);
                 var tomorrowMidnight = midnight.AddDays(1);
 
+                var dstFix = (midnight - midnight.ToUniversalTime()).Seconds -
+                    (tomorrowMidnight - tomorrowMidnight.ToUniversalTime()).Seconds;
+
                 var done = false;
                 DateTime[] candidateDates = null;
 
@@ -113,13 +116,13 @@ namespace Chronic.Tags.Repeaters
                     candidateDates = tick.IsAmbiguous
                         ? new DateTime[]
                             {
-                                midnight.AddSeconds(tick.ToInt32()),
-                                midnight.AddSeconds(tick.ToInt32() + halfDay),
+                                midnight.AddSeconds(tick.ToInt32() + dstFix),
+                                midnight.AddSeconds(tick.ToInt32() + halfDay + dstFix),
                                 tomorrowMidnight.AddSeconds(tick.ToInt32())
                             }
                         : new DateTime[]
                             {
-                                midnight.AddSeconds(tick.ToInt32()),
+                                midnight.AddSeconds(tick.ToInt32() + dstFix),
                                 tomorrowMidnight.AddSeconds(tick.ToInt32())
                             };
 
@@ -138,13 +141,13 @@ namespace Chronic.Tags.Repeaters
                     candidateDates = tick.IsAmbiguous
                         ? new DateTime[]
                             {
-                                midnight.AddSeconds(tick.ToInt32() + halfDay),
-                                midnight.AddSeconds(tick.ToInt32()),
-                                yesterdayMidnight.AddSeconds(tick.ToInt32()*2)
+                                midnight.AddSeconds(tick.ToInt32() + halfDay + dstFix),
+                                midnight.AddSeconds(tick.ToInt32() + dstFix),
+                                yesterdayMidnight.AddSeconds(tick.ToInt32() + halfDay)
                             }
                         : new DateTime[]
                             {
-                                midnight.AddSeconds(tick.ToInt32()),
+                                midnight.AddSeconds(tick.ToInt32() + dstFix),
                                 yesterdayMidnight.AddSeconds(tick.ToInt32())
                             };
 

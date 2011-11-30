@@ -14,6 +14,8 @@ namespace Chronic
 
         public EndianPrecedence EndianPrecedence { get; set; }
 
+        public string OriginalPhrase { get; set; }
+
         public Options()
         {
             AmbiguousTimeRange = DefaultAmbiguousTimeRange;

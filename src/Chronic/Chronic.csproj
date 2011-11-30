@@ -41,7 +41,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EndianPrecedence.cs" />
-    <Compile Include="Handlers\SySmSdTTzHandler.cs" />
     <Compile Include="Handlers\HandlerTypePattern.cs" />
     <Compile Include="Handlers\OdRmnHandler.cs" />
     <Compile Include="Handlers\OdRmnSyHandler.cs" />
@@ -50,7 +49,7 @@
     <Compile Include="Handlers\PSRHandler.cs" />
     <Compile Include="Handlers\RdnRmnOdHandler.cs" />
     <Compile Include="Handlers\RdnRmnSdHandler.cs" />
-    <Compile Include="Handlers\RdnRmnSdTTzSyHandler.cs" />
+    <Compile Include="Handlers\BCLDateTimeHandler.cs" />
     <Compile Include="Handlers\Registration\EndianSpecificRegistry.cs" />
     <Compile Include="Handlers\RGRHandler.cs" />
     <Compile Include="Handlers\RHandler.cs" />
@@ -76,6 +75,8 @@
     <Compile Include="Range.cs" />
     <Compile Include="System\Time.cs" />
     <Compile Include="System\TokenCollectionExtensions.cs" />
+    <Compile Include="Tags\TimeZone.cs" />
+    <Compile Include="Tags\TimeZoneScanner.cs" />
     <Compile Include="Tags\GrabberScanner.cs" />
     <Compile Include="Handlers\ComplexHandler.cs" />
     <Compile Include="Handlers\Registration\Handle.cs" />
@@ -129,7 +130,6 @@
     <Compile Include="System\CollectionExtensions.cs" />
     <Compile Include="System\StringExtensions.cs" />
     <Compile Include="Tags\Tag.cs" />
-    <Compile Include="Tags\TimeZone.cs" />
     <Compile Include="Tick.cs" />
     <Compile Include="Token.cs" />
   </ItemGroup>

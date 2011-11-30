@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Chronic.Tags;
 using Chronic.Tags.Repeaters;
 
 namespace Chronic.Handlers
@@ -95,30 +96,12 @@ namespace Chronic.Handlers
                         .Required<RepeaterDayName>()
                         .Required<RepeaterMonthName>()
                         .Required<ScalarDay>()
-                        .Required<RepeaterTime>()
-                        .Optional<SeparatorDate>()
-                        .Required<TimeZone>()
-                        .Required<ScalarYear>()
-                        .Using<RdnRmnSdTTzSyHandler>(),
-                    Handle
-                        .Required<RepeaterDayName>()
-                        .Required<RepeaterMonthName>()
-                        .Required<ScalarDay>()
                         .Using<RdnRmnSdHandler>(),
                     Handle
                         .Required<RepeaterDayName>()
                         .Required<RepeaterMonthName>()
                         .Required<OrdinalDay>()
                         .Using<RdnRmnOdHandler>(),
-                    Handle
-                        .Required<ScalarYear>()
-                        .Required<SeparatorDate>()
-                        .Required<ScalarMonth>()
-                        .Required<SeparatorDate>()
-                        .Required<ScalarDay>()
-                        .Required<RepeaterTime>()
-                        .Required<TimeZone>()
-                        .Using<SySmSdTTzHandler>(),
                     Handle
                         .Required<RepeaterMonthName>()
                         .Required<ScalarDay>()

@@ -19,7 +19,8 @@ namespace Chronic
                 new PointerScanner(),
                 new ScalarScanner(), 
                 new OrdinalScanner(), 
-                new SeparatorScanner(),                
+                new SeparatorScanner(),
+                new TimeZoneScanner(),
             };
 
         public Parser()
@@ -41,6 +42,7 @@ namespace Chronic
 
         public Span Parse(string phrase, Options options)
         {
+            options.OriginalPhrase = phrase;
             Logger.Log(() => phrase);
             phrase = Normalize(phrase);
             Logger.Log(() => phrase);
