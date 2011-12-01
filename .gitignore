@@ -41,3 +41,4 @@
 
 # ============== Project specific ignores
 src/packages
+build
