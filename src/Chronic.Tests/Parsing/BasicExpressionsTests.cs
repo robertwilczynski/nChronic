@@ -17,6 +17,18 @@ namespace Chronic.Tests.Parsing
         }
 
         [Fact]
+        public void uppercase_today_is_parsed_correctly()
+        {
+            Parse("TODAY").AssertStartsAt(DateTime.Now.Date);
+        }
+
+        [Fact]
+        public void first_letter_uppercase_today_is_parsed_correctly()
+        {
+            Parse("Today").AssertStartsAt(DateTime.Now.Date);
+        }
+
+        [Fact]
         public void yesterday_is_parsed_correctly()
         {
             Parse("yesterday").AssertStartsAt(DateTime.Now.Date.AddDays(-1));

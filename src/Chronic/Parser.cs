@@ -67,7 +67,7 @@ namespace Chronic
         public static string Normalize(string phrase)
         {
             var normalized = phrase.ToLower();
-            normalized = phrase
+            normalized = normalized
                 .ReplaceAll(@"([/\-,@])", " " + "$1" + " ")
                 .ReplaceAll(@"['""\.,]", "")
                 .ReplaceAll(@"\bsecond (of|day|month|hour|minute|second)\b", "2nd $1")
