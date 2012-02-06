@@ -5,14 +5,14 @@ namespace Chronic.Handlers
 {
     public class HandlerBuilder
     {
-        readonly IList<HandlerPattern> _patternParts =
+        private readonly IList<HandlerPattern> _patternParts =
             new List<HandlerPattern>();
 
         public Type BaseHandler { get; private set; }
 
         public HandlerBuilder Using<THandler>()
         {
-            BaseHandler = typeof (THandler);
+            BaseHandler = typeof(THandler);
             return this;
         }
 
@@ -24,13 +24,13 @@ namespace Chronic.Handlers
 
         public HandlerBuilder Optional<THandler>()
         {
-            _patternParts.Add(new TagPattern(typeof (THandler), true));
+            _patternParts.Add(new TagPattern(typeof(THandler), true));
             return this;
         }
 
         public HandlerBuilder Required<THandler>()
         {
-            _patternParts.Add(new TagPattern(typeof (THandler), false));
+            _patternParts.Add(new TagPattern(typeof(THandler), false));
             return this;
         }
 
@@ -49,8 +49,10 @@ namespace Chronic.Handlers
         public static implicit operator ComplexHandler(HandlerBuilder builder)
         {
             return new ComplexHandler(
-                builder.BaseHandler != null ? Activator.CreateInstance(builder.BaseHandler) as IHandler : null,
-                builder._patternParts) as ComplexHandler;
+                builder.BaseHandler != null
+                    ? Activator.CreateInstance(builder.BaseHandler) as IHandler
+                    : null,
+                builder._patternParts);
         }
     }
 }
