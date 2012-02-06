@@ -8,6 +8,7 @@ namespace Chronic
         static readonly dynamic[] Patterns = new dynamic[]
             {
                 new { Pattern = @"^,$".Compile(), Tag = new SeparatorComma() },
+                new { Pattern = @"^and$".Compile(), Tag = new SeparatorComma() },
                 new { Pattern = @"^(at|@)$".Compile(), Tag = new SeparatorAt() },
                 new { Pattern = @"^in$".Compile(), Tag = new SeparatorIn() },
                 new { Pattern = @"^/$".Compile(), Tag = new SeparatorDate(Separator.Type.Slash) },
