@@ -16,7 +16,7 @@
 *.res
 *.user
 *.sln.cache
-
+*.dotCover
 # ============== Build artifacts
 # Source/*/bin/ - why the hell doesn't this work?
 # Source/*/obj/ - why the hell doesn't this work?
