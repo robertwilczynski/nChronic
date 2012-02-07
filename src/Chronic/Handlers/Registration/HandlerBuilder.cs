@@ -3,9 +3,35 @@ using System.Collections.Generic;
 
 namespace Chronic.Handlers
 {
+    public class Repetition
+    {
+        private readonly HandlerBuilder _builder;
+        private readonly HandlerBuilder _innerBuilder;
+
+        public Repetition(HandlerBuilder builder, HandlerBuilder innerBuilder)
+        {
+            _builder = builder;
+            _innerBuilder = innerBuilder;
+        }
+
+        public HandlerBuilder AnyNumberOfTimes()
+        {
+            var pattern = new RepeatPattern(_innerBuilder._patternParts, RepeatPattern.Inifinite);
+            _builder._patternParts.Add(pattern);
+            return _builder;
+        }
+
+        public HandlerBuilder Times(int number)
+        {
+            var pattern = new RepeatPattern(_innerBuilder._patternParts, number);
+            _builder._patternParts.Add(pattern);
+            return _builder;
+        }
+    }
+
     public class HandlerBuilder
     {
-        private readonly IList<HandlerPattern> _patternParts =
+        internal readonly IList<HandlerPattern> _patternParts =
             new List<HandlerPattern>();
 
         public Type BaseHandler { get; private set; }
@@ -32,6 +58,15 @@ namespace Chronic.Handlers
         {
             _patternParts.Add(new TagPattern(typeof(THandler), false));
             return this;
+        }
+
+        public Repetition Repeat(Action<HandlerBuilder> pattern)
+        {
+            if (pattern == null) throw new ArgumentNullException("pattern");
+
+            var builder = new HandlerBuilder();
+            pattern(builder);
+            return new Repetition(this, builder);
         }
 
         public HandlerBuilder Required(HandlerType type)

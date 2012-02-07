@@ -54,6 +54,7 @@
     <Compile Include="Handlers\RdnRmnSdHandler.cs" />
     <Compile Include="Handlers\BCLDateTimeHandler.cs" />
     <Compile Include="Handlers\Registration\EndianSpecificRegistry.cs" />
+    <Compile Include="Handlers\RepeatPattern.cs" />
     <Compile Include="Handlers\RGRHandler.cs" />
     <Compile Include="Handlers\RHandler.cs" />
     <Compile Include="Handlers\RmnOdHandler.cs" />
