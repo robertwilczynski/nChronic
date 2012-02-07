@@ -1,8 +1,8 @@
-<?xml version="1.0"?>
+ï»¿<?xml version="1.0"?>
 <package >
   <metadata>
     <id>Chronic</id>
-    <version>0.1.0</version>
+    <version>0.2.0</version>
     <authors>Robert Wilczynski</authors>
     <owners>Robert Wilczynski</owners>
     <licenseUrl>https://raw.github.com/robertwilczynski/nChronic/master/LICENSE</licenseUrl>
@@ -11,7 +11,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>A natural language date parser for .Net. A port of Ruby's chronic.</description>
     <releaseNotes>Initial release.</releaseNotes>
-    <copyright>Copyright © Robert Wilczynski 2011</copyright>
+    <copyright>Copyright Robert Wilczynski 2011-2012</copyright>
     <tags>date time parsing DateTime chronic natural language</tags>
   </metadata>
   <files>
