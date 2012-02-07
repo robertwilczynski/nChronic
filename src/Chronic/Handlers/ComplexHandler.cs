@@ -41,7 +41,7 @@ namespace Chronic.Handlers
                 {
                     var repetition = pattern as RepeatPattern;
                     int advancement;
-                    var match = repetition.Match(tokens.Skip(tokenIndex).ToList(), registry, out advancement);
+                    var match = repetition.Match(tokens.Skip(tokenIndex).ToList(), out advancement);
                     if (match == false && isRequired)
                     {
                         return false;

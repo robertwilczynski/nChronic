@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CollectionExtensionTests.cs" />
+    <Compile Include="Handlers\RepeatPatternTests.cs" />
     <Compile Include="Parsing\MultipleScalarRepeaterConjuctionsParsingTests.cs" />
     <Compile Include="CustomParsingTest.cs" />
     <Compile Include="NumerizerTests.cs" />

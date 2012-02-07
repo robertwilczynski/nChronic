@@ -22,7 +22,7 @@ namespace Chronic.Handlers
             _numberOfTimesToRepeat = numberOfTimesToRepeat;
         }
 
-        public bool Match(IList<Token> tokens, HandlerRegistry registry, out int advancement)
+        public bool Match(IList<Token> tokens, out int advancement)
         {
             advancement = 0;
             var tokenIndex = 0;

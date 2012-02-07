@@ -136,6 +136,7 @@
     <Compile Include="Tags\Tag.cs" />
     <Compile Include="Tick.cs" />
     <Compile Include="Token.cs" />
+    <Compile Include="Tokenizer.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

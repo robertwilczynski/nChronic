@@ -34,6 +34,11 @@ namespace Chronic.Handlers
         internal readonly IList<HandlerPattern> _patternParts =
             new List<HandlerPattern>();
 
+        public IEnumerable<HandlerPattern> GetPatterns()
+        {
+            return new List<HandlerPattern>(_patternParts);
+        }
+
         public Type BaseHandler { get; private set; }
 
         public HandlerBuilder Using<THandler>()
