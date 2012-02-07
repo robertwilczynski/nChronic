@@ -3,16 +3,47 @@ using System.Collections.Generic;
 
 namespace Chronic.Handlers
 {
+    public class Repetition
+    {
+        private readonly HandlerBuilder _builder;
+        private readonly HandlerBuilder _innerBuilder;
+
+        public Repetition(HandlerBuilder builder, HandlerBuilder innerBuilder)
+        {
+            _builder = builder;
+            _innerBuilder = innerBuilder;
+        }
+
+        public HandlerBuilder AnyNumberOfTimes()
+        {
+            var pattern = new RepeatPattern(_innerBuilder._patternParts, RepeatPattern.Inifinite);
+            _builder._patternParts.Add(pattern);
+            return _builder;
+        }
+
+        public HandlerBuilder Times(int number)
+        {
+            var pattern = new RepeatPattern(_innerBuilder._patternParts, number);
+            _builder._patternParts.Add(pattern);
+            return _builder;
+        }
+    }
+
     public class HandlerBuilder
     {
-        readonly IList<HandlerPattern> _patternParts =
+        internal readonly IList<HandlerPattern> _patternParts =
             new List<HandlerPattern>();
+
+        public IEnumerable<HandlerPattern> GetPatterns()
+        {
+            return new List<HandlerPattern>(_patternParts);
+        }
 
         public Type BaseHandler { get; private set; }
 
         public HandlerBuilder Using<THandler>()
         {
-            BaseHandler = typeof (THandler);
+            BaseHandler = typeof(THandler);
             return this;
         }
 
@@ -24,14 +55,23 @@ namespace Chronic.Handlers
 
         public HandlerBuilder Optional<THandler>()
         {
-            _patternParts.Add(new TagPattern(typeof (THandler), true));
+            _patternParts.Add(new TagPattern(typeof(THandler), true));
             return this;
         }
 
         public HandlerBuilder Required<THandler>()
         {
-            _patternParts.Add(new TagPattern(typeof (THandler), false));
+            _patternParts.Add(new TagPattern(typeof(THandler), false));
             return this;
+        }
+
+        public Repetition Repeat(Action<HandlerBuilder> pattern)
+        {
+            if (pattern == null) throw new ArgumentNullException("pattern");
+
+            var builder = new HandlerBuilder();
+            pattern(builder);
+            return new Repetition(this, builder);
         }
 
         public HandlerBuilder Required(HandlerType type)
@@ -49,8 +89,10 @@ namespace Chronic.Handlers
         public static implicit operator ComplexHandler(HandlerBuilder builder)
         {
             return new ComplexHandler(
-                builder.BaseHandler != null ? Activator.CreateInstance(builder.BaseHandler) as IHandler : null,
-                builder._patternParts) as ComplexHandler;
+                builder.BaseHandler != null
+                    ? Activator.CreateInstance(builder.BaseHandler) as IHandler
+                    : null,
+                builder._patternParts);
         }
     }
 }

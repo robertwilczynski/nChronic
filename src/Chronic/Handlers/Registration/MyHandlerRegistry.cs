@@ -216,6 +216,18 @@ namespace Chronic.Handlers
                         .Required<SeparatorDate>()
                         .Required<ScalarYear>()
                         .Using<SmSyHandler>(),
+
+                    Handle
+                        .Repeat(pattern => pattern                        
+                            .Required<Scalar>()
+                            .Required<IRepeater>()
+                            .Optional<SeparatorComma>() 
+                        ).AnyNumberOfTimes()
+                        .Required<Pointer>()
+                        .Optional<SeparatorAt>()
+                        .Optional(HandlerType.Time)
+                        .Using<MultiSRHandler>(),
+
                     //Handle
                     //    .Required<ScalarMonth>()
                     //    .Required<SeparatorDate>()

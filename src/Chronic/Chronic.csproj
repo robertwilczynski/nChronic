@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EndianPrecedence.cs" />
+    <Compile Include="Handlers\MultiSRHandler.cs" />
     <Compile Include="Handlers\HandlerTypePattern.cs" />
     <Compile Include="Handlers\OdRmnHandler.cs" />
     <Compile Include="Handlers\OdRmnSyHandler.cs" />
@@ -53,6 +54,7 @@
     <Compile Include="Handlers\RdnRmnSdHandler.cs" />
     <Compile Include="Handlers\BCLDateTimeHandler.cs" />
     <Compile Include="Handlers\Registration\EndianSpecificRegistry.cs" />
+    <Compile Include="Handlers\RepeatPattern.cs" />
     <Compile Include="Handlers\RGRHandler.cs" />
     <Compile Include="Handlers\RHandler.cs" />
     <Compile Include="Handlers\RmnOdHandler.cs" />
@@ -134,6 +136,7 @@
     <Compile Include="Tags\Tag.cs" />
     <Compile Include="Tick.cs" />
     <Compile Include="Token.cs" />
+    <Compile Include="Tokenizer.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

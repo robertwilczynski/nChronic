@@ -80,7 +80,7 @@ namespace Chronic.Tests
                     {
                         // Use pre_normalize here instead of Numerizer directly because
                         // pre_normalize deals with parsing 'second' appropriately
-                        Assert.Equal(r, Parser.Normalize(r));
+                        Assert.Equal(r, Tokenizer.Normalize(r));
                     });
         }
 

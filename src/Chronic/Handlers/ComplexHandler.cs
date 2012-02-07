@@ -37,6 +37,20 @@ namespace Chronic.Handlers
                         tokenIndex++;
                     }
                 }
+                else if (pattern is RepeatPattern)
+                {
+                    var repetition = pattern as RepeatPattern;
+                    int advancement;
+                    var match = repetition.Match(tokens.Skip(tokenIndex).ToList(), out advancement);
+                    if (match == false && isRequired)
+                    {
+                        return false;
+                    }
+                    if (match)
+                    {
+                        tokenIndex += advancement;
+                    }
+                }
                 else if (pattern is HandlerTypePattern)
                 {
                     if (isOptional && thereAreNoMoreTokens)
