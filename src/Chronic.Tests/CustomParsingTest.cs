@@ -52,5 +52,21 @@ namespace Chronic.Tests
             Parse("two weeks ago")
                 .AssertEquals(Time.New(2006, 8, 02, 14));
         }
+
+        public class CanExtractTimeSpanFromSpan : ParsingTestsBase
+        {
+            protected override DateTime Now()
+            {
+                return Time.New(2006, 8, 16, 14, 34, 13);
+            }
+
+            [Fact]
+            public void may_28_at_5_32_19pm()
+            {
+                Parse("7 days and two hours ago", new { Context = Pointer.Type.Past })
+                    .AssertEquals(Time.New(2006, 8, 09, 12, 34, 13));
+            }
+            
+        }
     }
 }
