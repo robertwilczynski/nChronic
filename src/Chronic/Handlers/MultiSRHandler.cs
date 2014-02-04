@@ -10,6 +10,14 @@ namespace Chronic.Handlers
             var now = options.Clock();
             var span = new Span(now, now.AddSeconds(1));
 
+            var grabberTokens = tokens
+                .SkipWhile(token => token.IsNotTaggedAs<Grabber>())
+                .ToList();
+            if (grabberTokens.Any())
+            {
+                span = grabberTokens.GetAnchor(options);
+            }
+
             var scalarRepeaters = tokens
                 .TakeWhile(token => token.IsNotTaggedAs<Pointer>())
                 .Where(token => token.IsNotTaggedAs<SeparatorComma>())

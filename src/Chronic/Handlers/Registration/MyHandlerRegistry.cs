@@ -224,6 +224,7 @@ namespace Chronic.Handlers
                             .Optional<SeparatorComma>() 
                         ).AnyNumberOfTimes()
                         .Required<Pointer>()
+                        .Optional(HandlerType.Anchor)
                         .Optional<SeparatorAt>()
                         .Optional(HandlerType.Time)
                         .Using<MultiSRHandler>(),

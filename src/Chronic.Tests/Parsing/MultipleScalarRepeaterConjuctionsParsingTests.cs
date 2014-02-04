@@ -55,5 +55,29 @@ namespace Chronic.Tests.Parsing
             Parse("3 years and 2 months, 3 days , 9 hours 10 minutes 3 seconds ago")
                .AssertEquals(Time.New(2003, 6, 13, 05, 20, 17));
         }
+
+        [Fact]
+        public void _7_weeks_and_6_days_from()
+        {
+            _now = Time.New(2012, 01, 01, 00, 00, 00);
+            Parse("7 weeks and 6 days from")
+               .AssertEquals(Time.New(2012, 02, 25, 00, 00, 00));
+        }
+
+        [Fact]
+        public void _7_weeks_and_6_days_from_today()
+        {
+            _now = Time.New(2012, 01, 01, 00, 00, 00);
+            Parse("7 weeks and 6 days from today")
+               .AssertEquals(Time.New(2012, 02, 25, 12, 00, 00));
+        }
+
+        [Fact]
+        public void _7_weeks_and_6_days_from_now()
+        {
+            _now = Time.New(2012, 01, 01, 00, 00, 00);
+            Parse("7 weeks and 6 days from now")
+               .AssertEquals(Time.New(2012, 02, 25, 00, 00, 00));
+        }
     }
 }
