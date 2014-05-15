@@ -224,6 +224,16 @@ namespace Chronic.Handlers
                         .Using<SmSyHandler>(),
 
                     Handle
+                        .Required<Scalar>()
+                        .Required<IRepeater>()
+                        .Optional<SeparatorComma>() 
+                        .Required<Pointer>()
+                        .Required(HandlerType.Anchor)
+                        .Required<SeparatorAt>()
+                        .Required(HandlerType.Time)
+                        .Using<SRPAHandler>(),
+
+                    Handle
                         .Repeat(pattern => pattern                        
                             .Required<Scalar>()
                             .Required<IRepeater>()
