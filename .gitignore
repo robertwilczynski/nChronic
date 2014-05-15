@@ -39,6 +39,10 @@
 
 # ============== Coderush/!Refactor
 
+# ============== NCrunch 
+*.ncrunchproject
+*.ncrunchsolution
+
 # ============== Project specific ignores
 src/packages
 build
