@@ -31,6 +31,12 @@ namespace Chronic.Handlers
                         .Required<Grabber>()
                         .Required<IRepeater>()
                         .Using<ORGRHandler>(),
+                    Handle
+                        .Required<Grabber>()
+                        .Required<IRepeater>()
+                        .Required<Grabber>()
+                        .Required<IRepeater>()
+                        .Using<GRGRHandler>(),
                 };
             Add(HandlerType.Narrow, handlers);
         }

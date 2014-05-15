@@ -24,6 +24,20 @@ namespace Chronic.Handlers
             return span;
         }
 
+        public static Span HandleGRR(IList<Token> tokens, Span outerSpan)
+        {
+            var grabber = tokens[0].GetTag<Grabber>().Value;
+            var repeater = tokens[1].GetTag<IRepeater>();
+            Span span = null;
+            if (grabber == Grabber.Type.Last)
+            {
+                repeater.Now = outerSpan.End.Value;
+                span = repeater.GetNextSpan(Pointer.Type.Past);
+            }
+
+            return span;
+        }
+
         public static Span DayOrTime(DateTime dayStart, IList<Token> timeTokens,
                                      Options options)
         {
