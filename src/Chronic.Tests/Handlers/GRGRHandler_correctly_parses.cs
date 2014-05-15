@@ -93,5 +93,27 @@ namespace Chronic.Tests.Handlers
                 .ReturnsSpan()
                 .StartingAt(Time.New(2006, 8, 20));
         }
+
+        [Fact]
+        public void first_day_of_this_week_when_week_starts_on_Monday()
+        {
+            When
+                .ItIs("2006-08-16 14:00:00")
+                .Parsing("first day of this week")
+                .WithOptions(new { FirstDayOfWeek = DayOfWeek.Monday })
+                .ReturnsSpan()
+                .StartingAt(Time.New(2006, 8, 14));
+        }
+
+        [Fact]
+        public void first_day_of_this_week_when_week_starts_on_Sunday()
+        {
+            When
+                .ItIs("2006-08-16 14:00:00")
+                .Parsing("first day of this week")
+                .WithOptions(new { FirstDayOfWeek = DayOfWeek.Sunday })
+                .ReturnsSpan()
+                .StartingAt(Time.New(2006, 8, 13));
+        }
     }
 }
