@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 
 namespace Chronic
 {
@@ -15,12 +16,14 @@ namespace Chronic
         public EndianPrecedence EndianPrecedence { get; set; }
 
         public string OriginalPhrase { get; set; }
+        public DayOfWeek FirstDayOfWeek { get; set; }
 
         public Options()
         {
             AmbiguousTimeRange = DefaultAmbiguousTimeRange;
             EndianPrecedence = EndianPrecedence.Middle;
             Clock = () => DateTime.Now;
+            FirstDayOfWeek = DayOfWeek.Sunday;
         }
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using Chronic;
 using Chronic.Tags.Repeaters;
 
@@ -6,19 +7,30 @@ namespace Chronic.Tags.Repeaters
 {
     public class RepeaterWeek : RepeaterUnit
     {
+        private readonly Options _options;
         public static readonly int WEEK_SECONDS = 604800; // (7 * 24 * 60 * 60);
         public static readonly int WEEK_DAYS = 7;
 
         private DateTime? _start;
 
-        public RepeaterWeek()
+        public RepeaterWeek(Options options)
             : base(UnitName.Week)
         {
+            if (options == null) 
+                throw new ArgumentNullException("options");
 
+            _options = options;
         }
+
         public override int GetWidth()
         {
             return RepeaterWeek.WEEK_SECONDS;
+        }
+
+        private DayOfWeek GetStartOfWeek()
+        {
+            return _options.FirstDayOfWeek;
+            //return CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek;   
         }
 
         protected override Span NextSpan(Pointer.Type pointer)
@@ -27,23 +39,25 @@ namespace Chronic.Tags.Repeaters
             {
                 if (pointer == Pointer.Type.Future)
                 {
-                    var sundayRepeater = new RepeaterDayName(DayOfWeek.Sunday);
+                    var sundayRepeater = new RepeaterDayName(GetStartOfWeek());
                     sundayRepeater.Now = Now;
-                    Span nextSundaySpan = sundayRepeater.GetNextSpan(Pointer.Type.Future);
+                    Span nextSundaySpan = sundayRepeater
+                        .GetNextSpan(Pointer.Type.Future);
                     _start = nextSundaySpan.Start.Value;
                 }
                 else if (pointer == Pointer.Type.Past)
                 {
-                    var sundayRepeater = new RepeaterDayName(DayOfWeek.Sunday);
+                    var sundayRepeater = new RepeaterDayName(GetStartOfWeek());
                     sundayRepeater.Now = Now.Value.AddDays(1);
                     sundayRepeater.GetNextSpan(Pointer.Type.Past);
-                    var lastSundaySpan = sundayRepeater.GetNextSpan(Pointer.Type.Past);
+                    var lastSundaySpan = sundayRepeater
+                        .GetNextSpan(Pointer.Type.Past);
                     _start = lastSundaySpan.Start.Value;
-
                 }
                 else
                 {
-                    throw new ArgumentException("Unable to handle pointer " + pointer + ".", "pointer");
+                    throw new ArgumentException(
+                        "Unable to handle pointer " + pointer + ".", "pointer");
                 }
             }
             else
@@ -66,7 +80,7 @@ namespace Chronic.Tags.Repeaters
             if (pointer == Pointer.Type.Future)
             {
                 thisWeekStart = Time.New(now, now.Hour).AddHours(1);
-                var sundayRepeater = new RepeaterDayName(DayOfWeek.Sunday);
+                var sundayRepeater = new RepeaterDayName(GetStartOfWeek());
                 sundayRepeater.Now = now;
                 var thisSundaySpan = sundayRepeater.GetCurrentSpan(Pointer.Type.Future);
                 thisWeekEnd = thisSundaySpan.Start.Value;
@@ -75,7 +89,7 @@ namespace Chronic.Tags.Repeaters
             else if (pointer == Pointer.Type.Past)
             {
                 thisWeekEnd = now;
-                var sundayRepeater = new RepeaterDayName(DayOfWeek.Sunday);
+                var sundayRepeater = new RepeaterDayName(GetStartOfWeek());
                 sundayRepeater.Now = now;
                 var lastSundaySpan = sundayRepeater.GetNextSpan(Pointer.Type.Past);
                 thisWeekStart = lastSundaySpan.Start.Value;
@@ -83,7 +97,7 @@ namespace Chronic.Tags.Repeaters
             }
             else if (pointer == Pointer.Type.None)
             {
-                var sundayRepeater = new RepeaterDayName(DayOfWeek.Sunday);
+                var sundayRepeater = new RepeaterDayName(GetStartOfWeek());
                 sundayRepeater.Now = now;
                 Span lastSundaySpan = sundayRepeater.GetNextSpan(Pointer.Type.Past);
                 thisWeekStart = lastSundaySpan.Start.Value;

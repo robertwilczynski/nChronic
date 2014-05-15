@@ -44,7 +44,22 @@ namespace Chronic.Tags.Repeaters
             {
                 if (item.Pattern.IsMatch(token.Value))
                 {
-                    tag = Activator.CreateInstance(item.Unit) as ITag;
+                    var type = (Type)item.Unit;
+                    var hasCtorWithOptions = type.GetConstructors().Any(ctor =>
+                    {
+                        var parameters = ctor.GetParameters().ToArray();
+                        return
+                            parameters.Length == 1
+                            && parameters.First().ParameterType == typeof(Options);
+                    });
+                    var ctorParameters = hasCtorWithOptions
+                        ? new[] { options }
+                        : new object[0];
+
+                    tag = Activator.CreateInstance(
+                        type,
+                        ctorParameters) as ITag;
+
                     return;
                 }
             });
