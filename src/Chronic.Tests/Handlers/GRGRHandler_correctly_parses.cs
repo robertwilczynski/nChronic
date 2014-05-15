@@ -16,7 +16,6 @@ namespace Chronic.Tests.Handlers
             Parse("last day of next month")
                 .AssertStartsAt(Time.New(2006, 9, 30));
         }
-
         [Fact]
         public void last_day_of_next_month_when_next_month_is_February_in_leap_year()
         {
@@ -44,5 +43,55 @@ namespace Chronic.Tests.Handlers
                 .AssertStartsAt(Time.New(2006, 8, 31));
         }
 
+        [Fact]
+        public void last_day_of_last_month()
+        {
+            Parse("last day of last month")
+                .AssertStartsAt(Time.New(2006, 7, 31));
+        }
+
+        [Fact]
+        public void last_day_of_next_week_when_week_starts_on_Monday()
+        {
+            When
+                .ItIs("2006-08-16 14:00:00")
+                .Parsing("last day of next week")
+                .WithOptions(new { FirstDayOfWeek = DayOfWeek.Monday })
+                .ReturnsSpan()
+                .StartingAt(Time.New(2006, 8, 27));
+        }
+
+        [Fact]
+        public void last_day_of_next_week_when_week_starts_on_Sunday()
+        {
+            When
+                .ItIs("2006-08-16 14:00:00")
+                .Parsing("last day of next week")
+                .WithOptions(new { FirstDayOfWeek = DayOfWeek.Sunday })
+                .ReturnsSpan()
+                .StartingAt(Time.New(2006, 8, 26));
+        }
+
+        [Fact]
+        public void last_day_of_this_week_when_week_starts_on_Sunday()
+        {
+            When
+                .ItIs("2006-08-16 14:00:00")
+                .Parsing("last day of this week")
+                .WithOptions(new { FirstDayOfWeek = DayOfWeek.Sunday })
+                .ReturnsSpan()
+                .StartingAt(Time.New(2006, 8, 19));
+        }
+
+        [Fact]
+        public void last_day_of_this_week_when_week_starts_on_Monday()
+        {
+            When
+                .ItIs("2006-08-16 14:00:00")
+                .Parsing("last day of this week")
+                .WithOptions(new { FirstDayOfWeek = DayOfWeek.Monday })
+                .ReturnsSpan()
+                .StartingAt(Time.New(2006, 8, 20));
+        }
     }
 }

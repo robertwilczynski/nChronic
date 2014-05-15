@@ -21,7 +21,7 @@ namespace Chronic.Tests
     internal interface ISetParsingTestContext
     {
         ISetParsingTestContext Parsing(string phrase);
-        ISetParsingTestContext WithOptions(Options options);
+        ISetParsingTestContext WithOptions(object options);
         Span ReturnsSpan();
     }
 
@@ -32,14 +32,23 @@ namespace Chronic.Tests
         public string Phrase { get; private set; }
         public Options Options { get; private set; }
 
+        public ParsingTestContext()
+        {
+            Options = new Options();
+        }
+
         public ParsingTestContext(DateTime now)
+            : this()
         {
             Now = () => now;
+            Options.Clock = Now;
         }
 
         public ParsingTestContext(Func<DateTime> getNow)
+            : this()
         {
             Now = getNow;
+            Options.Clock = Now;
         }
 
         public ISetParsingTestContext Parsing(string phrase)
@@ -48,15 +57,9 @@ namespace Chronic.Tests
             return this;
         }
 
-        public ISetParsingTestContext WithOptions(Options options)
+        public ISetParsingTestContext WithOptions(object options)
         {
-            Options.AmbiguousTimeRange = options.AmbiguousTimeRange;
-            Options.Clock = options.Clock
-                ?? Options.Clock
-                ?? new Func<DateTime>(() => DateTime.UtcNow);
-            Options.Context = options.Context;
-            Options.EndianPrecedence = options.EndianPrecedence;
-
+            Options = Options.Extend(options);
             return this;
         }
 
