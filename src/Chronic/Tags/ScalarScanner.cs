@@ -9,16 +9,16 @@ namespace Chronic
     {
         static readonly Regex _pattern = new Regex(
             @"^\d*$",
-            RegexOptions.Singleline | RegexOptions.Compiled);
+            RegexOptions.Singleline);
 
         static readonly Regex _dayPattern = new Regex(
             @"^\d\d?$",
-            RegexOptions.Singleline | RegexOptions.Compiled);
+            RegexOptions.Singleline);
 
         static readonly Regex _monthPattern = _dayPattern;
         static readonly Regex _yearPattern = new Regex(
             @"^([1-9]\d)?\d\d?$",
-            RegexOptions.Singleline | RegexOptions.Compiled);
+            RegexOptions.Singleline);
 
         static readonly string[] _dayPeriods = new string[] { "am", "pm", "morning", "afternoon", "evening", "night" };
 

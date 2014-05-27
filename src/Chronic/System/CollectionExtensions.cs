@@ -27,7 +27,7 @@ namespace Chronic
             for (var i = 0; i < @this.GetLength(0); i++)
             {
                 var pattern = (T)@this[i, 0];
-                var replacement = (TT)Convert.ChangeType(@this[i, 1], typeof(TT));
+                var replacement = (TT)Convert.ChangeType(@this[i, 1], typeof(TT), null);
                 action(pattern, replacement);
             }
         }

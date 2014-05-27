@@ -11,7 +11,7 @@ namespace Chronic.Tags.Repeaters
         protected RepeaterDayPortion(T value)
             : base(value)
         {
-            
+
         }
 
         protected abstract int GetWidth(Range range);
@@ -22,11 +22,10 @@ namespace Chronic.Tags.Repeaters
         {
             var range = GetRange(Value);
             DateTime rangeStart;
-            DateTime rangeEnd;
             if (_currentSpan == null)
             {
                 var now = Now.Value;
-                var nowSeconds = (long)Math.Truncate(now.TimeOfDay.TotalSeconds);
+                var nowSeconds = (long)Math.Floor(now.TimeOfDay.TotalSeconds);
 
                 if (nowSeconds < range.StartSecond)
                 {

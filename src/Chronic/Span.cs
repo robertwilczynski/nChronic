@@ -19,7 +19,7 @@ namespace Chronic
             get
             {
                 return
-                    (int)Math.Truncate((End.Value - Start.Value).TotalSeconds);
+                    (int)Math.Floor(Math.Abs((End.Value - Start.Value).TotalSeconds));
             }
         }
 

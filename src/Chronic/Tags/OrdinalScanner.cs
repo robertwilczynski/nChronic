@@ -8,7 +8,7 @@ namespace Chronic
     {
         protected static readonly Regex Pattern = new Regex(
             @"^(\d*)(st|nd|rd|th)$",
-            RegexOptions.Singleline | RegexOptions.Compiled);
+            RegexOptions.Singleline);
 
         public IList<Token> Scan(IList<Token> tokens, Options options)
         {

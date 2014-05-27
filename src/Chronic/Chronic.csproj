@@ -1,19 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
+    <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{39FA7DFB-2254-4DBD-AE70-4DA763B2E8AD}</ProjectGuid>
+    <ProjectGuid>{3A5C2650-F416-441C-9E8A-F106E894E5EA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Chronic</RootNamespace>
-    <AssemblyName>Chronic</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <RootNamespace>ChronicPortable</RootNamespace>
+    <AssemblyName>ChronicPortable</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-    <RestorePackages>true</RestorePackages>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TargetFrameworkProfile>Profile344</TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,19 +34,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
+    <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EndianPrecedence.cs" />
+    <Compile Include="Handlers\BCLDateTimeHandler.cs" />
+    <Compile Include="Handlers\ComplexHandler.cs" />
     <Compile Include="Handlers\GRGRHandler.cs" />
-    <Compile Include="Handlers\MultiSRHandler.cs" />
+    <Compile Include="Handlers\HandlerPattern.cs" />
+    <Compile Include="Handlers\HandlerType.cs" />
     <Compile Include="Handlers\HandlerTypePattern.cs" />
+    <Compile Include="Handlers\IHandler.cs" />
+    <Compile Include="Handlers\MultiSRHandler.cs" />
     <Compile Include="Handlers\OdRmnHandler.cs" />
     <Compile Include="Handlers\OdRmnSyHandler.cs" />
     <Compile Include="Handlers\ORGRHandler.cs" />
@@ -53,8 +53,11 @@
     <Compile Include="Handlers\PSRHandler.cs" />
     <Compile Include="Handlers\RdnRmnOdHandler.cs" />
     <Compile Include="Handlers\RdnRmnSdHandler.cs" />
-    <Compile Include="Handlers\BCLDateTimeHandler.cs" />
     <Compile Include="Handlers\Registration\EndianSpecificRegistry.cs" />
+    <Compile Include="Handlers\Registration\Handle.cs" />
+    <Compile Include="Handlers\Registration\HandlerBuilder.cs" />
+    <Compile Include="Handlers\Registration\HandlerRegistry.cs" />
+    <Compile Include="Handlers\Registration\MyHandlerRegistry.cs" />
     <Compile Include="Handlers\RepeatPattern.cs" />
     <Compile Include="Handlers\RGRHandler.cs" />
     <Compile Include="Handlers\RHandler.cs" />
@@ -63,6 +66,7 @@
     <Compile Include="Handlers\RmnOdSyHandler.cs" />
     <Compile Include="Handlers\RmnSdHandler.cs" />
     <Compile Include="Handlers\RmnSdOnHandler.cs" />
+    <Compile Include="Handlers\RmnSdSyHandler.cs" />
     <Compile Include="Handlers\RmnSyHandler.cs" />
     <Compile Include="Handlers\SdRmnHandler.cs" />
     <Compile Include="Handlers\SdRmnSyHandler.cs" />
@@ -74,31 +78,32 @@
     <Compile Include="Handlers\SRPHandler.cs" />
     <Compile Include="Handlers\SyRmnOdHandler.cs" />
     <Compile Include="Handlers\SySmSdHandler.cs" />
+    <Compile Include="Handlers\TagPattern.cs" />
     <Compile Include="Handlers\Utils.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Numerizer.cs" />
+    <Compile Include="Options.cs" />
+    <Compile Include="Parser.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Range.cs" />
+    <Compile Include="Span.cs" />
+    <Compile Include="System\CollectionExtensions.cs" />
+    <Compile Include="System\StringExtensions.cs" />
     <Compile Include="System\Time.cs" />
     <Compile Include="System\TokenCollectionExtensions.cs" />
-    <Compile Include="Tags\TimeZone.cs" />
-    <Compile Include="Tags\TimeZoneScanner.cs" />
+    <Compile Include="Tags\Grabber.cs" />
     <Compile Include="Tags\GrabberScanner.cs" />
-    <Compile Include="Handlers\ComplexHandler.cs" />
-    <Compile Include="Handlers\Registration\Handle.cs" />
-    <Compile Include="Handlers\Registration\HandlerBuilder.cs" />
-    <Compile Include="Handlers\HandlerPattern.cs" />
-    <Compile Include="Handlers\Registration\HandlerRegistry.cs" />
-    <Compile Include="Handlers\HandlerType.cs" />
-    <Compile Include="Handlers\IHandler.cs" />
-    <Compile Include="Handlers\Registration\MyHandlerRegistry.cs" />
-    <Compile Include="Handlers\TagPattern.cs" />
-    <Compile Include="Tags\Repeaters\RepeaterUnit.cs" />
-    <Compile Include="Tags\Repeaters\EnumRepeaterDayPortion.cs" />
-    <Compile Include="Tags\Repeaters\IntegerRepeaterDayPortion.cs" />
-    <Compile Include="Tags\Repeaters\Repeater.cs" />
+    <Compile Include="Tags\ITokenScanner.cs" />
+    <Compile Include="Tags\Ordinal.cs" />
+    <Compile Include="Tags\OrdinalScanner.cs" />
+    <Compile Include="Tags\Pointer.cs" />
+    <Compile Include="Tags\PointerScanner.cs" />
     <Compile Include="Tags\Repeaters\DayPortion.cs" />
+    <Compile Include="Tags\Repeaters\EnumRepeaterDayPortion.cs" />
     <Compile Include="Tags\Repeaters\IllegalStateException.cs" />
+    <Compile Include="Tags\Repeaters\IntegerRepeaterDayPortion.cs" />
     <Compile Include="Tags\Repeaters\MonthName.cs" />
+    <Compile Include="Tags\Repeaters\Repeater.cs" />
     <Compile Include="Tags\Repeaters\RepeaterDay.cs" />
     <Compile Include="Tags\Repeaters\RepeaterDayName.cs" />
     <Compile Include="Tags\Repeaters\RepeaterDayPortion.cs" />
@@ -111,16 +116,7 @@
     <Compile Include="Tags\Repeaters\RepeaterSeason.cs" />
     <Compile Include="Tags\Repeaters\RepeaterSecond.cs" />
     <Compile Include="Tags\Repeaters\RepeaterTime.cs" />
-    <Compile Include="Tags\ITokenScanner.cs" />
-    <Compile Include="Options.cs" />
-    <Compile Include="Tags\Ordinal.cs" />
-    <Compile Include="Tags\OrdinalScanner.cs" />
-    <Compile Include="Parser.cs" />
-    <Compile Include="Tags\Pointer.cs" />
-    <Compile Include="Tags\PointerScanner.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tags\Grabber.cs" />
-    <Compile Include="Handlers\RmnSdSyHandler.cs" />
+    <Compile Include="Tags\Repeaters\RepeaterUnit.cs" />
     <Compile Include="Tags\Repeaters\RepeaterUnitName.cs" />
     <Compile Include="Tags\Repeaters\RepeaterWeek.cs" />
     <Compile Include="Tags\Repeaters\RepeaterWeekend.cs" />
@@ -131,17 +127,14 @@
     <Compile Include="Tags\Separator.cs" />
     <Compile Include="Tags\SeparatorComma.cs" />
     <Compile Include="Tags\SeparatorScanner.cs" />
-    <Compile Include="Span.cs" />
-    <Compile Include="System\CollectionExtensions.cs" />
-    <Compile Include="System\StringExtensions.cs" />
     <Compile Include="Tags\Tag.cs" />
+    <Compile Include="Tags\TimeZone.cs" />
+    <Compile Include="Tags\TimeZoneScanner.cs" />
     <Compile Include="Tick.cs" />
     <Compile Include="Token.cs" />
     <Compile Include="Tokenizer.cs" />
   </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

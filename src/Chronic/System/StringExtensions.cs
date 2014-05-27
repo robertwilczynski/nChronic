@@ -6,12 +6,12 @@ namespace Chronic
     {
         public static string ReplaceAll(this string @this, string pattern, string replacement)
         {
-            return Regex.Replace(@this, pattern, replacement);            
+            return Regex.Replace(@this, pattern, replacement);
         }
 
         public static Regex Compile(this string @this)
         {
-            return new Regex(@this, RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            return new Regex(@this, RegexOptions.IgnoreCase);
         }
 
         public static string LastCharacters(this string @this, int numberOfCharsToTake)
