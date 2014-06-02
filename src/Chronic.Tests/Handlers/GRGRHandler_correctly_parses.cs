@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Runtime.Remoting.Contexts;
 using Xunit;
+using Xunit.Extensions;
 
 namespace Chronic.Tests.Handlers
 {
@@ -16,6 +18,7 @@ namespace Chronic.Tests.Handlers
             Parse("last day of next month")
                 .AssertStartsAt(Time.New(2006, 9, 30));
         }
+
         [Fact]
         public void last_day_of_next_month_when_next_month_is_February_in_leap_year()
         {
@@ -36,6 +39,60 @@ namespace Chronic.Tests.Handlers
                 .StartingAt(Time.New(1997, 2, 28));
         }
 
+        [Theory]
+        [InlineData(Pointer.Type.Future)]
+        [InlineData(Pointer.Type.None)]
+        [InlineData(Pointer.Type.Past)]
+        public void last_day_of_this_month_when_it_is_first_day_of_month(
+            Pointer.Type pointer)
+        {
+            When
+                .ItIs("2014-06-01 23:35:00")
+                .Parsing("last day of this month")
+                .WithOptions(new
+                {
+                    Context = pointer
+                })
+                .ReturnsSpan()
+                .StartingAt(Time.New(2014, 06, 30));
+        }
+
+        [Theory]
+        [InlineData(Pointer.Type.Future)]
+        [InlineData(Pointer.Type.None)]
+        [InlineData(Pointer.Type.Past)]
+        public void last_day_of_this_month_when_it_is_last_day_of_month(
+            Pointer.Type pointer)
+        {
+            When
+                .ItIs("2014-06-30 23:35:00")
+                .Parsing("last day of this month")
+                .WithOptions(new
+                {
+                    Context = pointer
+                })
+                .ReturnsSpan()
+                .StartingAt(Time.New(2014, 06, 30));
+        }
+
+        [Theory]
+        [InlineData(Pointer.Type.Future)]
+        [InlineData(Pointer.Type.None)]
+        [InlineData(Pointer.Type.Past)]
+        public void last_day_of_this_month_when_it_is_middle_of_month(
+            Pointer.Type pointer)
+        {
+            When
+                .ItIs("2014-06-15 23:35:00")
+                .Parsing("last day of this month")
+                .WithOptions(new
+                {
+                    Context = pointer
+                })
+                .ReturnsSpan()
+                .StartingAt(Time.New(2014, 06, 30));
+        }
+
         [Fact]
         public void last_day_of_this_month()
         {
@@ -43,11 +100,59 @@ namespace Chronic.Tests.Handlers
                 .AssertStartsAt(Time.New(2006, 8, 31));
         }
 
-        [Fact]
-        public void last_day_of_last_month()
+        [Theory]
+        [InlineData(Pointer.Type.Future)]
+        [InlineData(Pointer.Type.None)]
+        [InlineData(Pointer.Type.Past)]
+        public void last_day_of_last_month_when_it_is_first_day_of_month(
+            Pointer.Type pointer)
         {
-            Parse("last day of last month")
-                .AssertStartsAt(Time.New(2006, 7, 31));
+            When
+                .ItIs("2014-07-01 23:35:00")
+                .Parsing("last day of last month")
+                .WithOptions(new
+                {
+                    FirstDayOfWeek = DayOfWeek.Sunday,
+                    Context = pointer
+                })
+                .ReturnsSpan()
+                .StartingAt(Time.New(2014, 06, 30));
+        }
+
+        [Theory]
+        [InlineData(Pointer.Type.Future)]
+        [InlineData(Pointer.Type.None)]
+        [InlineData(Pointer.Type.Past)]
+        public void last_day_of_last_month_when_it_is_last_day_of_month(
+            Pointer.Type pointer)
+        {
+            When
+                .ItIs("2014-07-31 23:35:00")
+                .Parsing("last day of last month")
+                .WithOptions(new
+                {
+                    Context = pointer
+                })
+                .ReturnsSpan()
+                .StartingAt(Time.New(2014, 06, 30));
+        }
+
+        [Theory]
+        [InlineData(Pointer.Type.Future)]
+        [InlineData(Pointer.Type.None)]
+        [InlineData(Pointer.Type.Past)]
+        public void last_day_of_last_month_when_it_is_middle_day_of_month(
+            Pointer.Type pointer)
+        {
+            When
+                .ItIs("2014-07-15 23:35:00")
+                .Parsing("last day of last month")
+                .WithOptions(new
+                {
+                    Context = pointer
+                })
+                .ReturnsSpan()
+                .StartingAt(Time.New(2014, 06, 30));
         }
 
         [Fact]

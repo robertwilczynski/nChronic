@@ -54,7 +54,7 @@ namespace Chronic.Tags.Repeaters
             else if (pointer == Pointer.Type.Past)
             {
                 monthStart = Time.New(now.Year, now.Month);
-                monthEnd = now.Date;
+                monthEnd = Time.New(now.Year, now.Month).AddMonths(1);
             }
             else if (pointer == Pointer.Type.None)
             {
