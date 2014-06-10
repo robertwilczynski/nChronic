@@ -8,8 +8,8 @@
     <ProjectGuid>{3A5C2650-F416-441C-9E8A-F106E894E5EA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ChronicPortable</RootNamespace>
-    <AssemblyName>ChronicPortable</AssemblyName>
+    <RootNamespace>Chronic</RootNamespace>
+    <AssemblyName>Chronic</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>

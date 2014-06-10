@@ -46,3 +46,6 @@
 # ============== Project specific ignores
 src/packages
 build
+/src/Chronic/Chronic.*.nupkg
+/src/Chronic/Chronic.nuspec
+/src/Chronic/nubuild.ps1
