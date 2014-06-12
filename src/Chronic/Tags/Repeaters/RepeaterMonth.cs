@@ -72,12 +72,11 @@ namespace Chronic.Tags.Repeaters
         {
             int direction = (pointer == Pointer.Type.Future) ? 1 : -1;
             return new Span(
-                span.Start.Value.AddMonths(amount * direction),
-                span.End.Value.AddMonths(amount * direction)
+                span.Start.AddMonths(amount * direction),
+                span.End.AddMonths(amount * direction)
             );
 
         }
-
 
         public override string ToString()
         {

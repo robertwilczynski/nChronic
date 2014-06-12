@@ -8,11 +8,9 @@ namespace Chronic.Tags.Repeaters
     {
         private DateTime? _start;
 
-
         public RepeaterYear()
             : base(UnitName.Year)
         {
-
         }
 
         protected override Span NextSpan(Pointer.Type pointer)
@@ -74,8 +72,8 @@ namespace Chronic.Tags.Repeaters
         public override Span GetOffset(Span span, int amount, Pointer.Type pointer)
         {
             var direction = (int)pointer;
-            var newBegin = BuildOffsetTime(span.Start.Value, amount, direction);
-            var newEnd = BuildOffsetTime(span.End.Value, amount, direction);
+            var newBegin = BuildOffsetTime(span.Start, amount, direction);
+            var newEnd = BuildOffsetTime(span.End, amount, direction);
             return new Span(newBegin, newEnd);
         }
 
@@ -98,6 +96,5 @@ namespace Chronic.Tags.Repeaters
         {
             return base.ToString() + "-year";
         }
-
     }
 }

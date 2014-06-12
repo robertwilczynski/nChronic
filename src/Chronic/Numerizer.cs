@@ -115,10 +115,10 @@ namespace Chronic
 
             BIG_PREFIXES.ForEach<string, long>(
                 (p, r) =>
-                    {
+                {
                     result = Regex.Replace(result, @"(?:<num>)?(\d*) *" + p, match => "<num>" + (r * int.Parse(match.Groups[1].Value)).ToString());
                     result = Andition(result);
-                    });
+                });
 
 
             // fractional addition
@@ -138,7 +138,7 @@ namespace Chronic
                 var match = pattern.Match(result);
                 if (match.Success == false)
                     break;
-                result = result.Substring(0, match.Index) + 
+                result = result.Substring(0, match.Index) +
                     "<num>" + ((int.Parse(match.Groups[1].Value) + int.Parse(match.Groups[3].Value)).ToString()) +
                     result.Substring(match.Index + match.Length);
             }

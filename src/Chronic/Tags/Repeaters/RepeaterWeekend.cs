@@ -30,14 +30,14 @@ namespace Chronic.Tags.Repeaters
                     var saturdayRepeater = new RepeaterDayName(DayOfWeek.Saturday);
                     saturdayRepeater.Now = Now;
                     var nextSaturdaySpan = saturdayRepeater.GetNextSpan(Pointer.Type.Future);
-                    _start = nextSaturdaySpan.Start.Value;
+                    _start = nextSaturdaySpan.Start;
                 }
                 else if (pointer == Pointer.Type.Past)
                 {
                     var saturdayRepeater = new RepeaterDayName(DayOfWeek.Saturday);
                     saturdayRepeater.Now = Now.Value.AddSeconds(RepeaterDay.DAY_SECONDS);
                     var lastSaturdaySpan = saturdayRepeater.GetNextSpan(Pointer.Type.Past);
-                    _start = lastSaturdaySpan.Start.Value;
+                    _start = lastSaturdaySpan.Start;
                 }
             }
             else
@@ -60,8 +60,8 @@ namespace Chronic.Tags.Repeaters
                 saturdayRepeater.Now = Now;
                 var thisSaturdaySpan = saturdayRepeater.GetNextSpan(Pointer.Type.Future);
                 thisSpan = new Span(
-                    thisSaturdaySpan.Start.Value,
-                    thisSaturdaySpan.Start.Value.AddSeconds(WEEKEND_SECONDS));
+                    thisSaturdaySpan.Start,
+                    thisSaturdaySpan.Start.AddSeconds(WEEKEND_SECONDS));
             }
             else if (pointer == Pointer.Type.Past)
             {
@@ -69,8 +69,8 @@ namespace Chronic.Tags.Repeaters
                 saturdayRepeater.Now = Now;
                 var lastSaturdaySpan = saturdayRepeater.GetNextSpan(Pointer.Type.Past);
                 thisSpan = new Span(
-                    lastSaturdaySpan.Start.Value,
-                    lastSaturdaySpan.Start.Value.AddSeconds(RepeaterWeekend.WEEKEND_SECONDS));
+                    lastSaturdaySpan.Start,
+                    lastSaturdaySpan.Start.AddSeconds(RepeaterWeekend.WEEKEND_SECONDS));
             }
             else
             {
@@ -87,7 +87,7 @@ namespace Chronic.Tags.Repeaters
             weekend.Now = span.Start;
             var start = weekend
                 .GetNextSpan(pointer)
-                .Start.Value
+                .Start
                 .AddSeconds((amount - 1) * direction * RepeaterWeek.WEEK_SECONDS);
 
             return new Span(start, start.AddSeconds(span.Width));

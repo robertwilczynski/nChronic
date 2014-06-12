@@ -7,8 +7,8 @@ namespace Chronic
 {
     public class Tick
     {
-        public int Time { get; set; }
-        public bool IsAmbiguous { get; set; }
+        public int Time { get; private set; }
+        public bool IsAmbiguous { get; private set; }
 
         public Tick(int time, bool isAmbiguous)
         {
@@ -36,5 +36,4 @@ namespace Chronic
             return Time + (IsAmbiguous ? "?" : "");
         }
     }
-
 }

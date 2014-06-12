@@ -9,7 +9,7 @@ namespace Chronic.Handlers
                                      Options options)
         {
             var repeater = tokens[1].GetTag<IRepeater>();
-            repeater.Now = outerSpan.Start.Value.AddSeconds(-1);
+            repeater.Now = outerSpan.Start.AddSeconds(-1);
             var ordinal = tokens[0].GetTag<Ordinal>().Value;
             Span span = null;
             for (var i = 0; i < ordinal; i++)
@@ -31,7 +31,7 @@ namespace Chronic.Handlers
             Span span = null;
             if (grabber == Grabber.Type.Last)
             {
-                repeater.Now = outerSpan.End.Value;
+                repeater.Now = outerSpan.End;
                 span = repeater.GetNextSpan(Pointer.Type.Past);
             }
 
@@ -44,7 +44,7 @@ namespace Chronic.Handlers
             var outerSpan = new Span(dayStart, dayStart.AddDays(1));
             if (timeTokens.Count > 0)
             {
-                options.Clock = () => outerSpan.Start.Value;
+                options.Clock = () => outerSpan.Start;
                 var time = timeTokens
                     .DealiasAndDisambiguateTimes(options)
                     .GetAnchor(options);
@@ -58,12 +58,9 @@ namespace Chronic.Handlers
         {
             month.Now = options.Clock();
             var span = month.GetCurrentSpan(options.Context);
-            var date = span.Start.Value;
+            var date = span.Start;
             var dayStart = Time.New(date.Year, date.Month, day);
             return Utils.DayOrTime(dayStart, timeTokens, options);
         }
-
-
-
     }
 }

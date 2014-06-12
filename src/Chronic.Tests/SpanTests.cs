@@ -4,7 +4,6 @@ namespace Chronic.Tests
 {
     public class SpanTests
     {
-
         [Fact]
         public void Width_returns_correct_value()
         {
@@ -21,8 +20,8 @@ namespace Chronic.Tests
                 Time.New(2006, 8, 16, 0, 0, 1),
                 Time.New(2006, 8, 17, 0, 0, 2))
                 .Add(1);
-            Assert.Equal(2, span.Start.Value.Second);
-            Assert.Equal(3, span.End.Value.Second);
+            Assert.Equal(2, span.Start.Second);
+            Assert.Equal(3, span.End.Second);
         }
 
         [Fact]
@@ -32,8 +31,8 @@ namespace Chronic.Tests
                 Time.New(2006, 8, 16, 0, 0, 3),
                 Time.New(2006, 8, 17, 0, 0, 4))
                 .Subtract(1);
-            Assert.Equal(2, span.Start.Value.Second);
-            Assert.Equal(3, span.End.Value.Second);
+            Assert.Equal(2, span.Start.Second);
+            Assert.Equal(3, span.End.Second);
         }
     }
 }

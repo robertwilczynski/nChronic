@@ -2,11 +2,11 @@
 
 namespace Chronic
 {
-    public class Span
+    public class Span : IEquatable<Span>
     {
-        public DateTime? Start;
+        public DateTime Start { get; private set; }
 
-        public DateTime? End;
+        public DateTime End { get; private set; }
 
         public Span(DateTime start, DateTime end)
         {
@@ -18,15 +18,13 @@ namespace Chronic
         {
             get
             {
-                return
-                    (int)Math.Floor(Math.Abs((End.Value - Start.Value).TotalSeconds));
+                return (int)Math.Floor(Math.Abs((End - Start).TotalSeconds));
             }
         }
 
         public Span Add(long seconds)
         {
-            return new Span(Start.Value.AddSeconds(seconds),
-                            End.Value.AddSeconds(seconds));
+            return new Span(Start.AddSeconds(seconds), End.AddSeconds(seconds));
         }
 
         public Span Subtract(long seconds)
@@ -43,13 +41,37 @@ namespace Chronic
         {
             if (Width > 1)
             {
-                return Start.Value.AddSeconds((double)Width / 2);
+                return Start.AddSeconds((double)Width / 2);
             }
             else
             {
-                return Start.Value;
+                return Start;
             }
+        }
 
+        public bool Equals(Span other)
+        {
+            if (other != null)
+                return Start == other.Start && End == other.End;
+            return false;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is Span)
+                return Equals((Span)obj);
+            return base.Equals(obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                int hash = 7;
+                hash = 31 * hash + Start.GetHashCode();
+                hash = 31 * hash + End.GetHashCode();
+                return hash;
+            }
         }
 
         public override string ToString()
@@ -57,6 +79,4 @@ namespace Chronic
             return String.Format("({0} - {1})", Start, End);
         }
     }
-
-
 }
