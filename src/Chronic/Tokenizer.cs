@@ -68,6 +68,7 @@ namespace Chronic
                 .ReplaceAll(@"\btonight\b", "this night")
                 .ReplaceAll(@"(\d)([ap]m|oclock)\b", "$1 $2")
                 .ReplaceAll(@"\b(hence|after|from)\b", "future")
+                .ReplaceAll(@"\ba (month|week|day|year)", "1 $1")
                 ;
 
             return normalized;
