@@ -56,7 +56,7 @@ namespace Chronic.Handlers
                         .Required<IRepeater>()
                         .Using<PSRHandler>(),
                     Handle
-                        .Required<Scalar>()
+                        .Optional<Scalar>()
                         .Required<IRepeater>()
                         .Required<Pointer>()
                         .Required(HandlerType.Anchor)
