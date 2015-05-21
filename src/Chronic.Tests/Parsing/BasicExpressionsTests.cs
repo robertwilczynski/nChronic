@@ -39,5 +39,11 @@ namespace Chronic.Tests.Parsing
         {
             Parse("tomorrow").AssertStartsAt(DateTime.Now.Date.AddDays(1));
         }
+
+        [Fact]
+        public void day_after_tomorrow_is_parsed_correctly()
+        {
+            Parse("Day after tomorrow").AssertStartsAt(DateTime.Now.Date.AddDays(2));
+        }
     }
 }
