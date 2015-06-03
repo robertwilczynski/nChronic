@@ -66,7 +66,13 @@ namespace Chronic.Tests
                 Parse("7 days and two hours ago", new { Context = Pointer.Type.Past })
                     .AssertEquals(Time.New(2006, 8, 09, 12, 34, 13));
             }
-            
+
+			[Fact]
+			public void friday_9_oct()
+			{
+				Parse("friday 9 oct")
+					.AssertEquals(Time.New(2006, 10, 09, 12));
+			}
         }
     }
 }

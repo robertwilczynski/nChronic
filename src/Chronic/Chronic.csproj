@@ -52,6 +52,7 @@
     <Compile Include="Handlers\ORSRHandler.cs" />
     <Compile Include="Handlers\PSRHandler.cs" />
     <Compile Include="Handlers\RdnRmnOdHandler.cs" />
+    <Compile Include="Handlers\RdnSdRmnHandler.cs" />
     <Compile Include="Handlers\RdnRmnSdHandler.cs" />
     <Compile Include="Handlers\BCLDateTimeHandler.cs" />
     <Compile Include="Handlers\Registration\EndianSpecificRegistry.cs" />
