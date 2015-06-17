@@ -9,8 +9,8 @@ namespace Chronic.Tests.Parsing
         static readonly TimeSpan TimeOfDay = new TimeSpan(15, 34, 44);
 
         protected override DateTime Now()
-        {            
-             return Date.Add(TimeOfDay);
+        {
+            return Date.Add(TimeOfDay);
         }
 
         [Fact]
@@ -46,8 +46,6 @@ namespace Chronic.Tests.Parsing
         {
             var date = new DateTime(2015, 6, 7, 3, 0, 0);
             Parse("this week", new Options { Clock = () => date }).AssertStartsAt(new DateTime(2015, 6, 7));
-        }
-
-
+        }     
     }
 }

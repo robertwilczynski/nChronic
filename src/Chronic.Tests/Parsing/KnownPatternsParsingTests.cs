@@ -405,5 +405,19 @@ namespace Chronic.Tests.Parsing
 
             Parse("Ham Sandwich").AssertIsNull();
         }
+
+        [Fact]
+        public void ordinal_no_month()
+        {
+            Parse("the 1st")
+                .AssertStartsAt(Time.New(2006,9,1));
+
+            Parse("the 22nd")
+                .AssertStartsAt(Time.New(2006, 8, 22));
+
+            Parse("the 22nd at 3 pm")
+                .AssertStartsAt(Time.New(2006, 8, 22, 15,0,0));
+            
+        }
     }
 }

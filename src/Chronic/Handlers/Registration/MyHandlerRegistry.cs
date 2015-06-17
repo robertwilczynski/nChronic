@@ -162,7 +162,7 @@ namespace Chronic.Handlers
                         .Using<OdRmnSyHandler>(),
                     Handle
                         .Required<OrdinalDay>()
-                        .Required<RepeaterMonthName>()
+                        .Optional<RepeaterMonthName>()
                         .Optional<SeparatorAt>()
                         .Optional(HandlerType.Time)
                         .Using<OdRmnHandler>(),
