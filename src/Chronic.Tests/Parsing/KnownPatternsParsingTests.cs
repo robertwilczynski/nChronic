@@ -419,5 +419,12 @@ namespace Chronic.Tests.Parsing
                 .AssertStartsAt(Time.New(2006, 8, 22, 15,0,0));
             
         }
+
+        [Fact]
+        public void next_month_name_in_the_same_month_returns_next_year()
+        {
+            Parse("next August")
+                .AssertStartsAt(Time.New(2007, 8, 1));
+        }
     }
 }
