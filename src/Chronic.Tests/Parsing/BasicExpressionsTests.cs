@@ -45,5 +45,44 @@ namespace Chronic.Tests.Parsing
         {
             Parse("Day after tomorrow").AssertStartsAt(DateTime.Now.Date.AddDays(2));
         }
+        [Fact]
+        public void next_week_is_parsed_correctly()
+        {
+            Parse("next week").AssertStartsAt(GetNextWeekday(DateTime.Today, DayOfWeek.Sunday));
+        }
+        [Fact]
+        public void week_after_next_week_is_parsed_correctly()
+        {
+            Parse("week after next week").AssertStartsAt( GetNextWeekday(DateTime.Today, DayOfWeek.Sunday).AddDays(7));
+        }
+        [Fact]
+        public void week_after_next_is_parsed_correctly()
+        {
+            Parse("week after next").AssertStartsAt(GetNextWeekday(DateTime.Today, DayOfWeek.Sunday).AddDays(7));
+        }
+        [Fact]
+        public void week_after_next_day_is_parsed_correctly()
+        {
+            Parse("week after next day").AssertStartsAt(GetNextWeekday(DateTime.Today, DateTime.Today.DayOfWeek).AddDays(1).AddDays(7));
+        }
+
+        [Fact]
+        public void week_after_friday_is_parsed_correctly()
+        {
+            Parse("week after friday").AssertStartsAt(GetNextWeekday(DateTime.Today, DayOfWeek.Friday).AddDays( 7));
+        }
+
+        [Fact]
+        public void week_after_next_friday_is_parsed_correctly()
+        {
+            Parse("week after next friday").AssertStartsAt(GetNextWeekday(DateTime.Today, DayOfWeek.Friday).AddDays(2*7));
+        }
+
+        public static DateTime GetNextWeekday(DateTime start, DayOfWeek day)
+        {
+            // The (... + 7) % 7 ensures we end up with a value in the range [0, 6]
+            int daysToAdd = ((int)day - (int)start.DayOfWeek + 7) % 7;
+            return start.AddDays(daysToAdd);
+        }
     }
 }

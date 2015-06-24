@@ -53,6 +53,7 @@ namespace Chronic
                 .Numerize()
                 .ReplaceAll(@" \-(\d{4})\b", " tzminus$1")
                 .ReplaceAll(@"(?:^|\s)0(\d+:\d+\s*pm?\b)", "$1")
+                .ReplaceAll(@"\b(day|week) (after) (next)(?! (day|week))\b", "$1 $2 $3 $1")
                 .ReplaceAll(@"\btoday\b", "this day")
                 .ReplaceAll(@"\btomm?orr?ow\b", "next day")
                 .ReplaceAll(@"\byesterday\b", "last day")
