@@ -198,6 +198,7 @@ namespace Chronic.Handlers
                         .Using<RmnSyHandler>(),
 
                     Handle
+						.Optional<RepeaterDayName>()
                         .Required<ScalarDay>()
                         .Required<RepeaterMonthName>()
                         .Required<ScalarYear>()
