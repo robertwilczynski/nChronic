@@ -426,5 +426,18 @@ namespace Chronic.Tests.Parsing
             Parse("next August")
                 .AssertStartsAt(Time.New(2007, 8, 1));
         }
+
+        [Fact]
+        public void ordinal_grabber_month_handler()
+        {
+            Parse("the 21st of next month")
+                .AssertEquals(Time.New(2006, 9, 21, 12));
+
+            Parse("the 21st of this month")
+                .AssertEquals(Time.New(2006, 8, 21, 12));
+
+            Parse("the 21st of last month")
+                .AssertEquals(Time.New(2006, 7, 21, 12));
+        }
     }
 }

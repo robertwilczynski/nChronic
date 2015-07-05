@@ -245,6 +245,12 @@ namespace Chronic.Handlers
                         .Optional(HandlerType.Time)
                         .Using<MultiSRHandler>(),
 
+                    Handle
+                        .Required<OrdinalDay>()
+                        .Required<Grabber>()
+                        .Required<RepeaterMonth>()                        
+                        .Using<OrdinalGrabberMonthHandler>()
+
                     //Handle
                     //    .Required<ScalarMonth>()
                     //    .Required<SeparatorDate>()
