@@ -126,7 +126,7 @@ namespace Chronic
                 BIG_PREFIXES_LONG.ForEach<string, long>(
                     (p, r) =>
                     {
-                        result = Regex.Replace(result, @"(?:<num>)?(\d*) *" + p, match => "<num>" + (r * int.Parse(match.Groups[1].Value)).ToString());
+                        result = Regex.Replace(result, @"(?:<num>)?(\d*) *" + p, match => "<num>" + (r * long.Parse(match.Groups[1].Value)).ToString());
                         result = Andition(result);
                     });
             else
@@ -156,7 +156,7 @@ namespace Chronic
                 if (match.Success == false)
                     break;
                 result = result.Substring(0, match.Index) + 
-                    "<num>" + ((int.Parse(match.Groups[1].Value) + int.Parse(match.Groups[3].Value)).ToString()) +
+                    "<num>" + ((int.Parse(match.Groups[1].Value) + long.Parse(match.Groups[3].Value)).ToString()) +
                     result.Substring(match.Index + match.Length);
             }
             return result;
