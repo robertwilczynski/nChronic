@@ -152,6 +152,7 @@ namespace Chronic.Handlers
                         .Required<RepeaterMonthName>()
                         .Required<ScalarDay>()
                         .Using<RmnSdOnHandler>(),
+
                     Handle
                         .Required<RepeaterMonthName>()
                         .Required<OrdinalDay>()
@@ -250,6 +251,18 @@ namespace Chronic.Handlers
                         .Optional<SeparatorAt>()
                         .Optional(HandlerType.Time)
                         .Using<MultiSRHandler>(),
+
+                    
+                     Handle
+                        .Required<RepeaterMonthName>()
+                        .Optional<SeparatorOn>()
+                        .Required<ScalarDay>()
+                        .Using<RmnOnSdHandler>(),
+                    Handle
+                        .Required<RepeaterMonthName>()
+                        .Optional<SeparatorIn>()
+                        .Required<ScalarDay>()
+                        .Using<RmnOnSdHandler>(),
 
                     //Handle
                     //    .Required<ScalarMonth>()
