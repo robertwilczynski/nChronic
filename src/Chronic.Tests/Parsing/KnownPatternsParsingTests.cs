@@ -13,6 +13,12 @@ namespace Chronic.Tests.Parsing
         [Fact]
         public void rmn_sd()
         {
+            Parse("december in 17")
+                .AssertEquals(Time.New(2006, 12, 17, 12));
+            
+            Parse("december on 17")
+                .AssertEquals(Time.New(2006, 12, 17, 12));
+
             Parse("aug 3")
                 .AssertEquals(Time.New(2006, 8, 3, 12));
 
