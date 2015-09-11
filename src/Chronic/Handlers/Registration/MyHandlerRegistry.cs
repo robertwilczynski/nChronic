@@ -159,6 +159,12 @@ namespace Chronic.Handlers
                         .Optional<SeparatorAt>()
                         .Optional(HandlerType.Time)
                         .Using<RmnOdHandler>(),
+					Handle
+                        .Required<Scalar>()
+                        .Required<IRepeater>()
+                        .Required<SeparatorIn>()
+                        .Required<IRepeater>()
+                        .Using<ORSRHandler>(),
                     Handle
                         .Required<OrdinalDay>()
                         .Required<RepeaterMonthName>()

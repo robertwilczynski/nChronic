@@ -10,7 +10,13 @@ namespace Chronic.Handlers
         {
             var repeater = tokens[1].GetTag<IRepeater>();
             repeater.Now = outerSpan.Start.Value.AddSeconds(-1);
-            var ordinal = tokens[0].GetTag<Ordinal>().Value;
+
+			int ordinal = 1;
+			if (tokens[0].GetTag<Ordinal>() != null)
+				ordinal= tokens[0].GetTag<Ordinal>().Value;
+			else
+				ordinal = tokens[0].GetTag<Scalar>().Value;
+
             Span span = null;
             for (var i = 0; i < ordinal; i++)
             {
