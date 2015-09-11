@@ -353,6 +353,9 @@ namespace Chronic.Tests.Parsing
             Parse("3rd wednesday in november").
                 AssertEquals(Time.New(2006, 11, 15, 12));
 
+			Parse("1 friday in november").
+				AssertEquals(Time.New(2006, 11, 3, 12));
+
             Parse("10th wednesday in november").AssertIsNull();
 
             // Parse("3rd wednesday in 2007").AssertEquals(
