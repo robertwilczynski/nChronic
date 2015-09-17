@@ -56,6 +56,7 @@ namespace Chronic.Handlers
                         .Required<IRepeater>()
                         .Using<PSRHandler>(),
                     Handle
+						.Optional<SeparatorIn>()
                         .Optional<Scalar>()
                         .Required<IRepeater>()
                         .Required<Pointer>()
