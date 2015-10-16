@@ -62,6 +62,19 @@ namespace Chronic.Handlers
                         .Required<Pointer>()
                         .Required(HandlerType.Anchor)
                         .Using<SRPAHandler>(),
+					Handle
+						.Optional<SeparatorIn>()
+                        .Optional<Scalar>()
+                        .Required<IRepeater>()
+                        .Required<Pointer>()
+						.Required<ScalarMonth>()
+                        .Required<SeparatorDate>()
+                        .Required<ScalarDay>()
+                        .Required<SeparatorDate>()
+                        .Required<ScalarYear>()
+                        .Optional<SeparatorAt>()
+                        .Optional(HandlerType.Time)
+                        .Using<SRPSmSdSyHandler>(),
                 };
 			Add(HandlerType.Arrow, handlers);
 		}

@@ -73,6 +73,7 @@
     <Compile Include="Handlers\SmSdSyHandler.cs" />
     <Compile Include="Handlers\SmSyHandler.cs" />
     <Compile Include="Handlers\SRPAHandler.cs" />
+    <Compile Include="Handlers\SRPSmSdSyHandler.cs" />
     <Compile Include="Handlers\SRPHandler.cs" />
     <Compile Include="Handlers\SyRmnOdHandler.cs" />
     <Compile Include="Handlers\SySmSdHandler.cs" />

@@ -84,5 +84,11 @@ namespace Chronic.Tests.Parsing
             int daysToAdd = ((int)day - (int)start.DayOfWeek + 7) % 7;
             return start.AddDays(daysToAdd);
         }
+
+		[Fact]
+		public void day_after_date_is_parsed_correctly()
+		{
+			Parse("1 day after 11/15/2015").AssertStartsAt(new DateTime(2015, 11, 16));
+		}
     }
 }
