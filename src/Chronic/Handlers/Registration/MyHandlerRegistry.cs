@@ -26,7 +26,7 @@ namespace Chronic.Handlers
                         .Required<IRepeater>()
                         .Using<ORSRHandler>(),
 					Handle
-                        .Required<OrdinalDay>()
+                        .Required<ScalarDay>()
                         .Required<RepeaterMonthName>()
                         .Required<Grabber>()
                         .Required<IRepeater>()

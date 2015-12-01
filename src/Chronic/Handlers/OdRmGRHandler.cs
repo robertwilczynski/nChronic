@@ -8,8 +8,8 @@ namespace Chronic.Handlers
     {
         public Span Handle(IList<Token> tokens, Options options)
         {
-			OdRmnHandler odRmnHandler = new OdRmnHandler();
-	        Span t = odRmnHandler.Handle(tokens.Take(2).ToList(), options);
+			SdRmnHandler sdRmnHandler = new SdRmnHandler();
+	        Span t = sdRmnHandler.Handle(tokens.Take(2).ToList(), options);
 
 
             var outerSpan = tokens.Skip(2).Take(2).GetAnchor(options);

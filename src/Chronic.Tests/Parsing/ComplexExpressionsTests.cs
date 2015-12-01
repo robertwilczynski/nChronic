@@ -44,7 +44,7 @@ namespace Chronic.Tests.Parsing
 		[Fact]
 		public void dates_next_year_are_parsed_correctly()
 		{
-			Parse("7th of july next year").AssertStartsAt(
+			Parse("7 july next year").AssertStartsAt(
 				Time.New(2012, 7, 7));
 		}
 
