@@ -46,6 +46,7 @@
     <Compile Include="Handlers\GRGRHandler.cs" />
     <Compile Include="Handlers\MultiSRHandler.cs" />
     <Compile Include="Handlers\HandlerTypePattern.cs" />
+    <Compile Include="Handlers\OdRmGRHandler.cs" />
     <Compile Include="Handlers\OdRmnHandler.cs" />
     <Compile Include="Handlers\OdRmnSyHandler.cs" />
     <Compile Include="Handlers\ORGRHandler.cs" />
