@@ -90,5 +90,14 @@ namespace Chronic.Tests.Parsing
 		{
 			Parse("1 day after 11/15/2015").AssertStartsAt(new DateTime(2015, 11, 16));
 		}
+
+		[Fact]
+		public void next_friday_or_weekend_is_parsed_correctly()
+		{
+			Parse("next friday").AssertStartsAt(GetNextWeekday(DateTime.Today, DayOfWeek.Friday).AddDays(7));
+			Parse("next week friday").AssertStartsAt(GetNextWeekday(DateTime.Today, DayOfWeek.Friday).AddDays(7));
+			Parse("next weekend").AssertStartsAt(GetNextWeekday(DateTime.Today, DayOfWeek.Saturday).AddDays(7));
+			Parse("next week weekend").AssertStartsAt(GetNextWeekday(DateTime.Today, DayOfWeek.Saturday).AddDays(7));
+		}
     }
 }
