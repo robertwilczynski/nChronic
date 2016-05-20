@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EndianPrecedence.cs" />
+    <Compile Include="Handlers\OrdinalGrabberMonthHandler.cs" />
     <Compile Include="Handlers\GRGRHandler.cs" />
     <Compile Include="Handlers\MultiSRHandler.cs" />
     <Compile Include="Handlers\HandlerTypePattern.cs" />

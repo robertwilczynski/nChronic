@@ -52,6 +52,12 @@ namespace Chronic.Tests
             Parse("two weeks ago")
                 .AssertEquals(Time.New(2006, 8, 02, 14));
         }
+        [Fact]
+        public void articles_are_normalized()
+        {
+            Parse("in a day").AssertStartsAt(Time.New(2006, 8, 17, 14));
+        }
+
 
         public class CanExtractTimeSpanFromSpan : ParsingTestsBase
         {

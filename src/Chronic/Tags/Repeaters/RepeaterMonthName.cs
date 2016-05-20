@@ -33,7 +33,7 @@ namespace Chronic.Tags.Repeaters
                     {
                         _currentMonthBegin = Time.New(Now.Value.Year, index);
                     }
-                    else if (now.Month > index)
+                    else if (now.Month >= index)
                     {
                         _currentMonthBegin = Time.New(Now.Value.Year + 1, index);
                     }

@@ -41,6 +41,11 @@ namespace Chronic.Tests.Parsing
                 Time.New(2004, 10, 18, TimeOfDay));
         }
 
-
+        [Fact]
+        public void this_week_parsed_correctly_on_last_day_of_week()
+        {
+            var date = new DateTime(2015, 6, 7, 3, 0, 0);
+            Parse("this week", new Options { Clock = () => date }).AssertStartsAt(new DateTime(2015, 6, 7));
+        }     
     }
 }

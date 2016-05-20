@@ -96,9 +96,10 @@ namespace Chronic.Tags.Repeaters
                 thisWeekSpan = new Span(thisWeekStart, thisWeekEnd);
             }
             else if (pointer == Pointer.Type.None)
-            {
+            {                                
                 var sundayRepeater = new RepeaterDayName(GetStartOfWeek());
-                sundayRepeater.Now = now;
+                sundayRepeater.Now = (now.DayOfWeek == GetStartOfWeek()) ? now.AddDays(1).Date : now;
+                
                 Span lastSundaySpan = sundayRepeater.GetNextSpan(Pointer.Type.Past);
                 thisWeekStart = lastSundaySpan.Start.Value;
                 thisWeekEnd = thisWeekStart.AddDays(RepeaterWeek.WEEK_DAYS);
@@ -111,6 +112,7 @@ namespace Chronic.Tags.Repeaters
             return thisWeekSpan;
 
         }
+      
 
         public override Span GetOffset(Span span, int amount, Pointer.Type pointer)
         {
