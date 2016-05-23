@@ -64,10 +64,19 @@ namespace Chronic
                 {"thousand", 1000},
                 {"million", 1000000},
                 {"billion", 1000000000},
-                {"trillion", 1000000000000},
+                {"trillion", 1000000000000}
             };
 
-        public static string Numerize(string value)
+        static readonly dynamic[,] BIG_PREFIXES_LONG = new dynamic[,]
+            {
+                {"hundred", 100},
+                {"thousand", 1000},
+                {"million", 1000000},
+                {"milliard", 1000000000},
+                {"billion", 1000000000000}
+            };
+
+        public static string Numerize(string value, bool longScale = false)
         {
             var result = value;
 
@@ -113,11 +122,19 @@ namespace Chronic
 
             // hundreds, thousands, millions, etc.
 
-            BIG_PREFIXES.ForEach<string, long>(
-                (p, r) =>
+            if(longScale)
+                BIG_PREFIXES_LONG.ForEach<string, long>(
+                    (p, r) =>
                     {
-                    result = Regex.Replace(result, @"(?:<num>)?(\d*) *" + p, match => "<num>" + (r * int.Parse(match.Groups[1].Value)).ToString());
-                    result = Andition(result);
+                        result = Regex.Replace(result, @"(?:<num>)?(\d*) *" + p, match => "<num>" + (r * long.Parse(match.Groups[1].Value)).ToString());
+                        result = Andition(result);
+                    });
+            else
+                BIG_PREFIXES.ForEach<string, long>(
+                    (p, r) =>
+                    {
+                        result = Regex.Replace(result, @"(?:<num>)?(\d*) *" + p, match => "<num>" + (r * int.Parse(match.Groups[1].Value)).ToString());
+                        result = Andition(result);
                     });
 
 
@@ -139,7 +156,7 @@ namespace Chronic
                 if (match.Success == false)
                     break;
                 result = result.Substring(0, match.Index) + 
-                    "<num>" + ((int.Parse(match.Groups[1].Value) + int.Parse(match.Groups[3].Value)).ToString()) +
+                    "<num>" + ((int.Parse(match.Groups[1].Value) + long.Parse(match.Groups[3].Value)).ToString()) +
                     result.Substring(match.Index + match.Length);
             }
             return result;
