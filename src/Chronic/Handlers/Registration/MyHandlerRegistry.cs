@@ -271,7 +271,25 @@ namespace Chronic.Handlers
                     //    .Using<SdSmSyHandler>(),
 
 
+                   Handle
+                        .Required<RepeaterDayName>()
+                        .Required<ScalarDay>()
+                        .Optional<SeparatorDate>()
+                        .Required<RepeaterMonthName>()
+                        .Optional<SeparatorDate>()
+                        .Required<ScalarYear>()
+                        .Optional<SeparatorAt>()
+                        .Optional(HandlerType.Time)
+                        .Using<RdnSdRmnSyTHandler>(),
 
+                   Handle
+                    .Required<ScalarYear>()
+                    .Optional<SeparatorDate>()
+                    .Required<RepeaterMonthName>()
+                    .Required<SeparatorDate>()
+                    .Required<ScalarDay>()
+                    .Optional(HandlerType.Time)
+                    .Using<SyRmnSdTHandler>()
 
                 };
 

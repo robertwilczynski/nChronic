@@ -8,11 +8,12 @@ namespace Chronic.Tests
     {
         protected abstract DateTime Now();
 
-        protected Span Parse(string input)
+        protected Span Parse(string input, string locale = null)
         {
             Parser.IsDebugMode = true;
             var parser = new Parser(new Options
             {
+                Locale = locale,
                 Clock = () => Now(),
             });
             return parser.Parse(input);
