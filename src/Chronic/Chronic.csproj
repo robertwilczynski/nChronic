@@ -69,6 +69,7 @@
     <Compile Include="Handlers\RdnRmnOdHandler.cs" />
     <Compile Include="Handlers\RdnRmnSdHandler.cs" />
     <Compile Include="Handlers\BCLDateTimeHandler.cs" />
+    <Compile Include="Handlers\RdnSdRmnSyTHandler.cs" />
     <Compile Include="Handlers\Registration\EndianSpecificRegistry.cs" />
     <Compile Include="Handlers\RepeatPattern.cs" />
     <Compile Include="Handlers\RGRHandler.cs" />
@@ -88,13 +89,21 @@
     <Compile Include="Handlers\SRPAHandler.cs" />
     <Compile Include="Handlers\SRPHandler.cs" />
     <Compile Include="Handlers\SyRmnOdHandler.cs" />
+    <Compile Include="Handlers\SyRmnSdTHandler.cs" />
     <Compile Include="Handlers\SySmSdHandler.cs" />
     <Compile Include="Handlers\Utils.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Numerizer.cs" />
     <Compile Include="Range.cs" />
+    <Compile Include="System\DateTimeFormatInfoHelpers.cs" />
     <Compile Include="System\Time.cs" />
     <Compile Include="System\TokenCollectionExtensions.cs" />
+    <Compile Include="Tags\Repeaters\Cultures\CultureItem.cs" />
+    <Compile Include="Tags\Repeaters\Cultures\CulturesPatterns.cs" />
+    <Compile Include="Tags\Repeaters\Patterns\DayOfWeekPattern.cs" />
+    <Compile Include="Tags\Repeaters\Patterns\DayPortionPattern.cs" />
+    <Compile Include="Tags\Repeaters\Patterns\MonthPattern.cs" />
+    <Compile Include="Tags\Repeaters\Patterns\UnitPattern.cs" />
     <Compile Include="Tags\TimeZone.cs" />
     <Compile Include="Tags\TimeZoneScanner.cs" />
     <Compile Include="Tags\GrabberScanner.cs" />
@@ -157,6 +166,7 @@
   <ItemGroup>
     <None Include="ultrico.snk" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
