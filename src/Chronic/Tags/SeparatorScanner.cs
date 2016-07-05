@@ -14,6 +14,9 @@ namespace Chronic
                 new { Pattern = @"^/$".Compile(), Tag = new SeparatorDate(Separator.Type.Slash) },
                 new { Pattern = @"^-$".Compile(), Tag = new SeparatorDate(Separator.Type.Dash) },
                 new { Pattern = @"^on$".Compile(), Tag = new SeparatorOn() },
+
+                // spanish month and year prefix
+                new { Pattern = @"^de$".Compile(), Tag = new SeparatorDate(Separator.Type.At) },
             };
 
         public IList<Token> Scan(IList<Token> tokens, Options options)
