@@ -16,11 +16,11 @@
 # Specify the Version Number to use for the NuGet package. If not specified, the version number of the assembly being packed will be used.
 # NuGet version number guidance: https://docs.nuget.org/docs/reference/versioning and the Semantic Versioning spec: http://semver.org/
 # e.g. "" (use assembly's version), "1.2.3" (stable version), "1.2.3-alpha" (prerelease version).
-$versionNumber = "0.3.8"
+$versionNumber = "0.3.10"
 
 # Specify any Release Notes for this package. 
 # These will only be included in the package if you have a .nuspec file for the project in the same directory as the project file.
-$releaseNotes = "Changes for HGB-578"
+$releaseNotes = "daynames resolved for sameday (basedate/time)if applicable"
 
 # Specify a specific Configuration and/or Platform to only create a NuGet package when building the project with this Configuration and/or Platform.
 #	e.g. $configuration = "Release"
@@ -56,11 +56,10 @@ $appendConfigurationAndPlatformToNuGetPackageFileName = $true
 
 # The NuGet gallery to upload to. If not provided, the DefaultPushSource in your NuGet.config file is used (typically nuget.org).
 #$sourceToUploadTo = "http://localhost:55033"
-$sourceToUploadTo = "http://hellogbyenugetserver.azurewebsites.net"
+#$sourceToUploadTo = "http://52.87.180.60"
 
 # The API Key to use to upload the package to the gallery. If not provided and a system-level one does not exist for the specified Source, you will be prompted for it.
-#$apiKey = "test3671"
-$apiKey = "amgine123#@!"
+$apiKey = ""
 
 # Specify any NuGet Push options to pass to nuget.exe.
 #	e.g. $pushOptions = "-Timeout 120"
