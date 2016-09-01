@@ -28,30 +28,41 @@ namespace Chronic.Tags.Repeaters
         protected override Span NextSpan(Pointer.Type pointer)
         {
             var now = Now.Value;
-            var direction = (pointer == Pointer.Type.Future) ? 1 : -1;
+            //            var direction = (pointer == Pointer.Type.Future) ? 1 : -1;
+            var direction = 1;
+            switch (pointer)
+            {
+                case Pointer.Type.Past:
+                    direction = -1;
+                    break;
+                case Pointer.Type.None:
+                    direction = 0;
+                    break;
+                case Pointer.Type.Future:
+                    direction = 1;
+                    break;
+            }
             if (_start == null)
-            {                
-                _start = now.Date.AddDays(direction);
+            {
                 var dayNum = (int)Value;
-
+                _start = (direction == 0 && (int)now.DayOfWeek == dayNum)
+                        ? now
+                        : now.Date.AddDays(direction);
+                var increment =(direction == 0) ?1: direction;
                 while ((int)(_start.Value.DayOfWeek) != dayNum)
                 {
-                    _start = _start.Value.AddDays(direction);
+                    _start = _start.Value.AddDays(increment);
                 }
             }
             else
             {
                 _start = _start.Value.AddDays(direction * 7);
             }
-            return new Span(_start.Value, _start.Value.AddDays(1));
+            return new Span(_start.Value, _start.Value.AddDays(1).Date);
         }
 
         protected override Span CurrentSpan(Pointer.Type pointer)
         {
-            if (pointer == Pointer.Type.None)
-            {
-                pointer = Pointer.Type.Future;
-            }
             return base.GetNextSpan(pointer);
         }
 
