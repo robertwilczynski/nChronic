@@ -5,11 +5,24 @@ namespace Chronic.Tests.Parsing
 {
     public class BasicExpressionsTests : ParsingTestsBase
     {
+        private DateTime _now = DateTime.Now;
         protected override DateTime Now()
         {
-            return DateTime.Now;
+            return _now;
         }
         
+        [Fact]
+        public void dayname_week()
+        {
+            var xx = Parse(Now().DayOfWeek.ToString());
+                xx.AssertStartsAt(Now());
+        }
+        [Fact]
+        public void next_dayname_week()
+        {
+            Parse("next " + Now().DayOfWeek.ToString()).AssertStartsAt(Now().Date.AddDays(7));
+        }
+
         [Fact]
         public void today_is_parsed_correctly()
         {
