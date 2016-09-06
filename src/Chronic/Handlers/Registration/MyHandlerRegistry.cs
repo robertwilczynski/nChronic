@@ -285,7 +285,7 @@ namespace Chronic.Handlers
                     Handle
                         .Required<RepeaterTime>()
                         .Optional<IRepeaterDayPortion>()
-                        .Using<BCLDateTimeHandler>(),
+                        .UsingNothing(),
                 };
             Add(HandlerType.Time, timeHandlers);
         }

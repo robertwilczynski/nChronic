@@ -39,18 +39,11 @@ namespace Chronic
 
         public Span TokensToSpan(IList<Token> tokens, Options options)
         {
-            foreach (var handler in _registry.GetHandlers(HandlerType.Endian).Concat(_registry.GetHandlers(HandlerType.Date)))
-            {
-                if (handler.Match(tokens, _registry))
-                {
-                    var targetTokens = tokens
-                        .Where(x => x.IsNotTaggedAs<Separator>())
-                        .ToList();
-                    return ExecuteHandler(handler, targetTokens, options);
-                }
-            }
+            var handlersToMatch = _registry
+                .GetHandlers(HandlerType.Endian)
+                .Concat(_registry.GetHandlers(HandlerType.Date));
 
-            foreach (var handler in _registry.GetHandlers(HandlerType.Time))
+            foreach (var handler in handlersToMatch)
             {
                 if (handler.Match(tokens, _registry))
                 {
