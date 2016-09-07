@@ -23,8 +23,10 @@ namespace Chronic.Tests.Parsing
         [Fact]
         public void time_format_is_parsed_correctly()
         {
+            var expect = DateTime.Now.Hour >= 13 ? DateTime.Now.Date.AddDays(1).AddHours(13) : DateTime.Now.Date.AddHours(13);
+
             Parse("13:00").Start
-                .AssertIsEqual(DateTime.Now.Date.AddHours(13));
+                .AssertIsEqual(expect);
         }
 
         [Fact]
