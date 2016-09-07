@@ -27,9 +27,7 @@ namespace Chronic.Tags.Repeaters
             }
             else if (t.Length == 4)
             {
-                var ambiguous = (value.Contains(":") &&
-                                    int.Parse(t.Substring(0, 1)) != 0 &&
-                                        int.Parse(t.Substring(0, 2)) <= 12);
+                var ambiguous = GetAmbiguous(value, t);
                 int hours = int.Parse(t.Substring(0, 2));
                 int hoursInSeconds = hours * 60 * 60;
                 int minutesInSeconds = int.Parse(t.Substring(2)) * 60;
@@ -78,6 +76,10 @@ namespace Chronic.Tags.Repeaters
             Value = tick;
         }
 
+        private static bool GetAmbiguous(string value, string t)
+        {
+            return (int.Parse(t.Substring(0, 1)) != 0 && int.Parse(t.Substring(0, 2)) <= 12);            
+        }
 
         public override string ToString()
         {

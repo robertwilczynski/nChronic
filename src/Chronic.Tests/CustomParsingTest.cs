@@ -12,6 +12,20 @@ namespace Chronic.Tests
         }
 
         [Fact]
+        public void _10semicolon45PM()
+        {
+            Parse("10:45 PM")
+                .AssertEquals(Time.New(2006, 8, 16, 22, 45));
+        }
+
+        [Fact]
+        public void _10dot45PM()
+        {
+            Parse("10.45 PM")
+                .AssertEquals(Time.New(2006, 8, 16, 22, 45));
+        }
+
+        [Fact]
         public void may_28_at_5_32_19pm()
         {
             Parse("may 28 at 5:32:19pm", new { Context = Pointer.Type.Past })
