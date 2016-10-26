@@ -142,6 +142,16 @@ namespace Chronic.Tests.Parsing
         }
 
         [Fact]
+        public void scalar_date_only()
+        {
+            Parse("27")
+                .AssertEquals(Time.New(2006, 8, 27, 12));
+
+            Parse("10")
+                .AssertEquals(Time.New(2006, 9, 10, 12));
+        }
+
+        [Fact]
         public void rmn_sd_sy()
         {
             Parse("November 18, 2010")
