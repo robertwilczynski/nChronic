@@ -22,7 +22,7 @@ namespace Chronic.Handlers
                 var dayStart = Time.New(year, month, day);
                 span = Utils.DayOrTime(dayStart, timeTokens, options);
             }
-            catch (ArgumentException e)
+            catch (ArgumentException)
             {
                 span = null;
             }
