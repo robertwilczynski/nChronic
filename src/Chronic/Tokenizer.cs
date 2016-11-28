@@ -53,7 +53,7 @@ namespace Chronic
                 .Numerize()
                 .ReplaceAll(@" \-(\d{4})\b", " tzminus$1")
                 .ReplaceAll(@"(?:^|\s)0(\d+:\d+\s*pm?\b)", "$1")
-                .ReplaceAll(@"\b(day|week) (after) (next)(?! (day|week))\b", "$1 $2 $3 $1")
+                .ReplaceAll(@"\b(day|week) (after|later) (next)(?! (day|week))\b", "$1 $2 $3 $1")
                 .ReplaceAll(@"\btoday\b", "this day")
                 .ReplaceAll(@"\btomm?orr?ow\b", "next day")
                 .ReplaceAll(@"\byesterday\b", "last day")
@@ -68,7 +68,7 @@ namespace Chronic
                 .ReplaceAll(@"\b(?:in the|during the|at) (afternoon|evening|night)\b", "$1")
                 .ReplaceAll(@"\btonight\b", "this night")
                 .ReplaceAll(@"(\d)([ap]m|oclock)\b", "$1 $2")
-                .ReplaceAll(@"\b(hence|after|from)\b", "future")
+                .ReplaceAll(@"\b(hence|after|later|from)\b", "future")
                 ;
 
             return normalized;
