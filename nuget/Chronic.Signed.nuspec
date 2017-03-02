@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0"?>
 <package >
   <metadata>
-    <id>Chronic</id>
+    <id>Chronic.Signed</id>
     <version>0.3.2</version>
     <authors>Robert Wilczynski</authors>
     <owners>Robert Wilczynski</owners>
@@ -11,12 +11,12 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>A natural language date parser for .Net. A port of Ruby's chronic.</description>
     <releaseNotes>Initial release.</releaseNotes>
-    <copyright>Copyright Robert Wilczynski 2011-2012</copyright>
-    <tags>date time parsing DateTime chronic natural language</tags>
+    <copyright>Copyright Robert Wilczynski 2011-2016</copyright>
+    <tags>date time parsing DateTime chronic natural language signed</tags>
   </metadata>
   <files>
-	<file src="..\src\Chronic\bin\Release\Chronic.dll" target="lib\net40" />
-	<file src="..\src\Chronic\bin\Release\Chronic.pdb" target="lib\net40" />
+	<file src="..\src\Chronic\bin\SignedRelease\Chronic.dll" target="lib\net40" />
+	<file src="..\src\Chronic\bin\SignedRelease\Chronic.pdb" target="lib\net40" />
 	<file src="..\src\Chronic\**\*.cs" target="src" />
   </files>
 </package>
