@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Chronic.Tags.Repeaters;
 
 namespace Chronic.Handlers
 {
@@ -9,7 +10,11 @@ namespace Chronic.Handlers
                                      Options options)
         {
             var repeater = tokens[1].GetTag<IRepeater>();
-            repeater.Now = outerSpan.Start.Value.AddSeconds(-1);
+
+            if(tokens[1].GetTag<RepeaterWeek>() != null)
+                repeater.Now = outerSpan.Start.Value.AddDays(-7);
+            else
+                repeater.Now = outerSpan.Start.Value.AddSeconds(-1);
 
 			int ordinal = 1;
 			if (tokens[0].GetTag<Ordinal>() != null)
@@ -18,6 +23,7 @@ namespace Chronic.Handlers
 				ordinal = tokens[0].GetTag<Scalar>().Value;
 
             Span span = null;
+
             for (var i = 0; i < ordinal; i++)
             {
                 span = repeater.GetNextSpan(Pointer.Type.Future);

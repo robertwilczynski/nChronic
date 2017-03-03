@@ -63,7 +63,7 @@ namespace Chronic.Tags.Repeaters
             else
             {
                 int direction = (pointer == Pointer.Type.Future) ? 1 : -1;
-                _start.Value.AddDays(RepeaterWeek.WEEK_DAYS * direction);
+                _start = _start.Value.AddDays(RepeaterWeek.WEEK_DAYS * direction);
             }
 
             return new Span(_start.Value, _start.Value.AddDays(RepeaterWeek.WEEK_DAYS));
