@@ -41,6 +41,13 @@ namespace Chronic.Tests.Parsing
                 Time.New(2004, 10, 18, TimeOfDay));
         }
 
+		[Fact]
+		public void dates_next_year_are_parsed_correctly()
+		{
+			Parse("7 july next year").AssertStartsAt(
+				Time.New(2012, 7, 7));
+		}
+
 
     }
 }

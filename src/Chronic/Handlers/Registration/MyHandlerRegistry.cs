@@ -4,20 +4,20 @@ using Chronic.Tags.Repeaters;
 
 namespace Chronic.Handlers
 {
-    public class MyHandlerRegistry : HandlerRegistry
-    {
-        public MyHandlerRegistry()
-        {
-            RegisterTimeHandler();
-            RegisterDateHandlers();
-            RegisterAnchorHandlers();
-            RegisterArrowHandlers();
-            RegisterNarrowHandlers();
-        }
+	public class MyHandlerRegistry : HandlerRegistry
+	{
+		public MyHandlerRegistry()
+		{
+			RegisterTimeHandler();
+			RegisterDateHandlers();
+			RegisterAnchorHandlers();
+			RegisterArrowHandlers();
+			RegisterNarrowHandlers();
+		}
 
-        void RegisterNarrowHandlers()
-        {
-            var handlers = new List<ComplexHandler>()
+		void RegisterNarrowHandlers()
+		{
+			var handlers = new List<ComplexHandler>()
                 {
                     Handle
                         .Required<Ordinal>()
@@ -25,6 +25,12 @@ namespace Chronic.Handlers
                         .Required<Separator>()
                         .Required<IRepeater>()
                         .Using<ORSRHandler>(),
+					Handle
+                        .Required<ScalarDay>()
+                        .Required<RepeaterMonthName>()
+                        .Required<Grabber>()
+                        .Required<IRepeater>()
+                        .Using<OdRmGRHandler>(),
                     Handle
                         .Required<Ordinal>()
                         .Required<IRepeater>()
@@ -38,12 +44,12 @@ namespace Chronic.Handlers
                         .Required<IRepeater>()
                         .Using<GRGRHandler>(),
                 };
-            Add(HandlerType.Narrow, handlers);
-        }
+			Add(HandlerType.Narrow, handlers);
+		}
 
-        void RegisterArrowHandlers()
-        {
-            var handlers = new List<ComplexHandler>()
+		void RegisterArrowHandlers()
+		{
+			var handlers = new List<ComplexHandler>()
                 {
                     Handle
                         .Required<Scalar>()
@@ -56,19 +62,33 @@ namespace Chronic.Handlers
                         .Required<IRepeater>()
                         .Using<PSRHandler>(),
                     Handle
-                        .Required<Scalar>()
+						.Optional<SeparatorIn>()
+                        .Optional<Scalar>()
                         .Required<IRepeater>()
                         .Required<Pointer>()
                         .Required(HandlerType.Anchor)
                         .Using<SRPAHandler>(),
+					Handle
+						.Optional<SeparatorIn>()
+                        .Optional<Scalar>()
+                        .Required<IRepeater>()
+                        .Required<Pointer>()
+						.Required<ScalarMonth>()
+                        .Required<SeparatorDate>()
+                        .Required<ScalarDay>()
+                        .Required<SeparatorDate>()
+                        .Required<ScalarYear>()
+                        .Optional<SeparatorAt>()
+                        .Optional(HandlerType.Time)
+                        .Using<SRPSmSdSyHandler>(),
                 };
-            Add(HandlerType.Arrow, handlers);
-        }
+			Add(HandlerType.Arrow, handlers);
+		}
 
-        void RegisterAnchorHandlers()
-        {
-            // tonight at 7pm
-            var handlers = new List<ComplexHandler>()
+		void RegisterAnchorHandlers()
+		{
+			// tonight at 7pm
+			var handlers = new List<ComplexHandler>()
                 {
                     Handle
                         .Optional<Grabber>()
@@ -91,18 +111,23 @@ namespace Chronic.Handlers
                         .Required<IRepeater>()
                         .Using<RGRHandler>(),
                 };
-            Add(HandlerType.Anchor, handlers);
-        }
+			Add(HandlerType.Anchor, handlers);
+		}
 
-        void RegisterDateHandlers()
-        {
-            var dateHandlers = new List<ComplexHandler>()
+		void RegisterDateHandlers()
+		{
+			var dateHandlers = new List<ComplexHandler>()
                 {
                     Handle
                         .Required<RepeaterDayName>()
                         .Required<RepeaterMonthName>()
                         .Required<ScalarDay>()
                         .Using<RdnRmnSdHandler>(),
+                         Handle
+                        .Required<RepeaterDayName>()
+                        .Required<ScalarDay>()
+                        .Required<RepeaterMonthName>()
+                        .Using<RdnSdRmnHandler>(),
                     Handle
                         .Required<RepeaterDayName>()
                         .Required<RepeaterMonthName>()
@@ -147,12 +172,24 @@ namespace Chronic.Handlers
                         .Required<RepeaterMonthName>()
                         .Required<ScalarDay>()
                         .Using<RmnSdOnHandler>(),
+
                     Handle
                         .Required<RepeaterMonthName>()
                         .Required<OrdinalDay>()
                         .Optional<SeparatorAt>()
                         .Optional(HandlerType.Time)
                         .Using<RmnOdHandler>(),
+					Handle
+                        .Required<Scalar>()
+                        .Required<IRepeater>()
+                        .Required<SeparatorIn>()
+                        .Required<IRepeater>()
+                        .Using<ORSRHandler>(),
+                    Handle
+                        .Required<Ordinal>()
+                        .Required<RepeaterWeek>()
+                        .Required<RepeaterMonthName>()
+                        .Using<ORSRHandler>(),
                     Handle
                         .Required<OrdinalDay>()
                         .Required<RepeaterMonthName>()
@@ -193,6 +230,7 @@ namespace Chronic.Handlers
                         .Using<RmnSyHandler>(),
 
                     Handle
+						.Optional<RepeaterDayName>()
                         .Required<ScalarDay>()
                         .Required<RepeaterMonthName>()
                         .Required<ScalarYear>()
@@ -245,6 +283,18 @@ namespace Chronic.Handlers
                         .Optional(HandlerType.Time)
                         .Using<MultiSRHandler>(),
 
+                    
+                     Handle
+                        .Required<RepeaterMonthName>()
+                        .Optional<SeparatorOn>()
+                        .Required<ScalarDay>()
+                        .Using<RmnOnSdHandler>(),
+                    Handle
+                        .Required<RepeaterMonthName>()
+                        .Optional<SeparatorIn>()
+                        .Required<ScalarDay>()
+                        .Using<RmnOnSdHandler>(),
+
                     //Handle
                     //    .Required<ScalarMonth>()
                     //    .Required<SeparatorDate>()
@@ -275,19 +325,19 @@ namespace Chronic.Handlers
 
                 };
 
-            Add(HandlerType.Date, dateHandlers);
-        }
+			Add(HandlerType.Date, dateHandlers);
+		}
 
-        void RegisterTimeHandler()
-        {
-            var timeHandlers = new List<ComplexHandler>()
+		void RegisterTimeHandler()
+		{
+			var timeHandlers = new List<ComplexHandler>()
                 {
                     Handle
                         .Required<RepeaterTime>()
                         .Optional<IRepeaterDayPortion>()
                         .UsingNothing(),
                 };
-            Add(HandlerType.Time, timeHandlers);
-        }
-    }
+			Add(HandlerType.Time, timeHandlers);
+		}
+	}
 }

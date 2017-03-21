@@ -13,6 +13,12 @@ namespace Chronic.Tests.Parsing
         [Fact]
         public void rmn_sd()
         {
+            Parse("december in 17")
+                .AssertEquals(Time.New(2006, 12, 17, 12));
+            
+            Parse("december on 17")
+                .AssertEquals(Time.New(2006, 12, 17, 12));
+
             Parse("aug 3")
                 .AssertEquals(Time.New(2006, 8, 3, 12));
 
@@ -136,6 +142,16 @@ namespace Chronic.Tests.Parsing
         }
 
         [Fact]
+        public void scalar_date_only()
+        {
+            Parse("27")
+                .AssertEquals(Time.New(2006, 8, 27, 12));
+
+            Parse("10")
+                .AssertEquals(Time.New(2006, 9, 10, 12));
+        }
+
+        [Fact]
         public void rmn_sd_sy()
         {
             Parse("November 18, 2010")
@@ -234,6 +250,9 @@ namespace Chronic.Tests.Parsing
 
             Parse("27 Oct 2006 7:30pm")
                 .AssertEquals(Time.New(2006, 10, 27, 19, 30));
+
+			Parse("monday 3 jan 2010")
+				.AssertEquals(Time.New(2010, 1, 3, 12));
         }
 
         [Fact]
@@ -343,6 +362,9 @@ namespace Chronic.Tests.Parsing
         {
             Parse("3rd wednesday in november").
                 AssertEquals(Time.New(2006, 11, 15, 12));
+
+			Parse("1 friday in november").
+				AssertEquals(Time.New(2006, 11, 3, 12));
 
             Parse("10th wednesday in november").AssertIsNull();
 

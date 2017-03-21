@@ -21,6 +21,12 @@ namespace Chronic.Tests.Parsing
         public void tuesday_is_parsed_correctly()
         {
             Parse("tuesday").Start
+                .AssertDatePartIsEqual(new DateTime(2011, 10, 18));
+        }
+        [Fact]
+        public void next_tuesday_is_parsed_correctly()
+        {
+            Parse("next tuesday").Start
                 .AssertDatePartIsEqual(new DateTime(2011, 10, 25));
         }
 

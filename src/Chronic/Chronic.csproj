@@ -61,12 +61,14 @@
     <Compile Include="Handlers\GRGRHandler.cs" />
     <Compile Include="Handlers\MultiSRHandler.cs" />
     <Compile Include="Handlers\HandlerTypePattern.cs" />
+    <Compile Include="Handlers\OdRmGRHandler.cs" />
     <Compile Include="Handlers\OdRmnHandler.cs" />
     <Compile Include="Handlers\OdRmnSyHandler.cs" />
     <Compile Include="Handlers\ORGRHandler.cs" />
     <Compile Include="Handlers\ORSRHandler.cs" />
     <Compile Include="Handlers\PSRHandler.cs" />
     <Compile Include="Handlers\RdnRmnOdHandler.cs" />
+    <Compile Include="Handlers\RdnSdRmnHandler.cs" />
     <Compile Include="Handlers\RdnRmnSdHandler.cs" />
     <Compile Include="Handlers\BCLDateTimeHandler.cs" />
     <Compile Include="Handlers\Registration\EndianSpecificRegistry.cs" />
@@ -76,6 +78,7 @@
     <Compile Include="Handlers\RmnOdHandler.cs" />
     <Compile Include="Handlers\RmnOdOnHandler.cs" />
     <Compile Include="Handlers\RmnOdSyHandler.cs" />
+    <Compile Include="Handlers\RmnOnOdHandler.cs" />
     <Compile Include="Handlers\RmnSdHandler.cs" />
     <Compile Include="Handlers\RmnSdOnHandler.cs" />
     <Compile Include="Handlers\RmnSyHandler.cs" />
@@ -86,6 +89,7 @@
     <Compile Include="Handlers\SmSdSyHandler.cs" />
     <Compile Include="Handlers\SmSyHandler.cs" />
     <Compile Include="Handlers\SRPAHandler.cs" />
+    <Compile Include="Handlers\SRPSmSdSyHandler.cs" />
     <Compile Include="Handlers\SRPHandler.cs" />
     <Compile Include="Handlers\SyRmnOdHandler.cs" />
     <Compile Include="Handlers\SySmSdHandler.cs" />
@@ -157,8 +161,25 @@
   <ItemGroup>
     <None Include="ultrico.snk" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="_CreateNewNuGetPackage\Config.ps1" />
+    <None Include="_CreateNewNuGetPackage\DoNotModify\CreateNuGetPackage.ps1" />
+    <None Include="_CreateNewNuGetPackage\DoNotModify\New-NuGetPackage.ps1" />
+    <None Include="_CreateNewNuGetPackage\DoNotModify\UploadNuGetPackage.ps1" />
+    <None Include="_CreateNewNuGetPackage\RunMeToUploadNuGetPackage.cmd" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_CreateNewNuGetPackage\DoNotModify\NuGet.exe" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>REM Create a NuGet package for this project and place the .nupkg file in the project's output directory.
+REM If you see this in Visual Studio's Error List window, check the Output window's Build tab for the actual error.
+ECHO Creating NuGet package in Post-Build event...
+PowerShell -NoProfile -ExecutionPolicy Bypass -Command "&amp; '$(ProjectDir)_CreateNewNuGetPackage\DoNotModify\CreateNuGetPackage.ps1' -ProjectFilePath '$(ProjectPath)' -OutputDirectory '$(TargetDir)' -BuildConfiguration '$(ConfigurationName)' -BuildPlatform '$(PlatformName)'"</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

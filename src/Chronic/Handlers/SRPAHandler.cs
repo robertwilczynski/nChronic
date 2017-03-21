@@ -7,7 +7,11 @@ namespace Chronic.Handlers
     {
         public override Span Handle(IList<Token> tokens, Options options)
         {
-            var anchorSpan = tokens.Skip(3).GetAnchor(options);
+			if (tokens.First().IsTaggedAs<SeparatorIn>())
+				tokens.RemoveAt(0);
+
+            int tokensToSkip = tokens.First().IsTaggedAs<Scalar>() ? 3 : 2;
+            var anchorSpan = tokens.Skip(tokensToSkip).GetAnchor(options);
             return Handle(tokens, anchorSpan, options);
         }
     }

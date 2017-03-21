@@ -25,6 +25,13 @@ namespace Chronic.Tests
                 .AssertEquals(Time.New(2006, 8, 23, 14));
         }
 
+		[Fact]
+		public void _in_7_days_from_now()
+		{
+			Parse("in 7 days from now")
+				.AssertEquals(Time.New(2006, 8, 23, 14));
+		}
+
         [Fact]
         public void _7_days_from_now_at_midnight()
         {
@@ -66,7 +73,31 @@ namespace Chronic.Tests
                 Parse("7 days and two hours ago", new { Context = Pointer.Type.Past })
                     .AssertEquals(Time.New(2006, 8, 09, 12, 34, 13));
             }
-            
+
+			[Fact]
+			public void friday_9_oct()
+			{
+				Parse("friday 9 oct")
+					.AssertEquals(Time.New(2006, 10, 09, 12));
+			}
+
+            [Fact]
+            public void second_week_in_january_is_parsed_correctly()
+            {
+                Parse("2nd week in january").AssertEquals(Time.New(2007, 1, 10, 12));
+            }
+
+            [Fact]
+            public void second_week_january_is_parsed_correctly()
+            {
+                Parse("2nd week january").AssertEquals(Time.New(2007, 1, 10, 12));
+            }
+
+            [Fact]
+            public void second_week_of_january_is_parsed_correctly()
+            {
+                Parse("2nd week of january").AssertEquals(Time.New(2007, 1, 10, 12));
+            }
         }
     }
 }

@@ -13,9 +13,14 @@ namespace Chronic.Handlers
 
         public Span Handle(IList<Token> tokens, Span span, Options options)
         {
-            var distance = tokens[0].GetTag<Scalar>().Value;
-            var repeater = tokens[1].GetTag<IRepeater>();
-            var pointer = tokens[2].GetTag<Pointer>().Value;
+            int distance = 1;
+            int index = 0;
+
+            if (tokens[0].GetTag<Scalar>() != null)
+                distance = tokens[index++].GetTag<Scalar>().Value;
+
+            var repeater = tokens[index++].GetTag<IRepeater>();
+            var pointer = tokens[index++].GetTag<Pointer>().Value;
             return repeater.GetOffset(span, distance, pointer);
         }
     }
