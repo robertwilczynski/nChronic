@@ -86,6 +86,18 @@ namespace Chronic.Tests
             {
                 Parse("2nd week in january").AssertEquals(Time.New(2007, 1, 10, 12));
             }
+
+            [Fact]
+            public void second_week_january_is_parsed_correctly()
+            {
+                Parse("2nd week january").AssertEquals(Time.New(2007, 1, 10, 12));
+            }
+
+            [Fact]
+            public void second_week_of_january_is_parsed_correctly()
+            {
+                Parse("2nd week of january").AssertEquals(Time.New(2007, 1, 10, 12));
+            }
         }
     }
 }

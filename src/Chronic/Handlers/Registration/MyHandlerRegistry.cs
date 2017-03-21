@@ -186,6 +186,11 @@ namespace Chronic.Handlers
                         .Required<IRepeater>()
                         .Using<ORSRHandler>(),
                     Handle
+                        .Required<Ordinal>()
+                        .Required<RepeaterWeek>()
+                        .Required<RepeaterMonthName>()
+                        .Using<ORSRHandler>(),
+                    Handle
                         .Required<OrdinalDay>()
                         .Required<RepeaterMonthName>()
                         .Required<ScalarYear>()
