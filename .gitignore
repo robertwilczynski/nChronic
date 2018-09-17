@@ -46,3 +46,4 @@
 # ============== Project specific ignores
 src/packages
 build
+/src/.vs/*

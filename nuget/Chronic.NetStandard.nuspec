@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Chronic.Netstandard</id>
+    <version>0.3.2</version>
+    <authors>Robert Wilczynski</authors>
+    <owners>Robert Wilczynski</owners>
+    <licenseUrl>https://raw.github.com/robertwilczynski/nChronic/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/robertwilczynski/nChronic</projectUrl>
+	<iconUrl>https://raw.github.com/robertwilczynski/nChronic/master/doc/chronic.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A natural language date parser for .Net. A port of Ruby's chronic.</description>
+    <releaseNotes>Initial release.</releaseNotes>
+    <copyright>Copyright Robert Wilczynski 2011-2016</copyright>
+    <tags>date time parsing DateTime chronic natural language signed</tags>
+  </metadata>
+  <files>
+	<file src="..\src\Chronic\bin\Release\netstandard2.0\Chronic.Netstandard.dll" target="lib\netstandard2.0" />
+	<file src="..\src\Chronic\bin\Release\netstandard2.0\Chronic.Netstandard.pdb" target="lib\netstandard2.0" />
+	<file src="..\src\Chronic\**\*.cs" target="src" />
+  </files>
+</package>
