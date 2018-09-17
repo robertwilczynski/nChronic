@@ -126,62 +126,81 @@ namespace Chronic.Tags.Repeaters
         static readonly Regex _timePattern =
             @"^\d{1,2}(:?\d{2})?([\.:]?\d{2})?$".Compile();
 
-        static readonly List<dynamic> DayPortionPatterns = new List<dynamic>
-            {
-                new {Pattern = "^ams?$".Compile(), Portion = DayPortion.AM},
-                new {Pattern = "^pms?$".Compile(), Portion = DayPortion.PM},
-                new {Pattern = "^mornings?$".Compile(), Portion = DayPortion.MORNING},
-                new {Pattern = "^afternoons?$".Compile(), Portion = DayPortion.AFTERNOON},
-                new {Pattern = "^evenings?$".Compile(), Portion = DayPortion.EVENING},
-                new {Pattern = "^(night|nite)s?$".Compile(), Portion = DayPortion.NIGHT},
-            };
+		static readonly List<PatternDayPortion> DayPortionPatterns = new List<PatternDayPortion>
+			{
+				new PatternDayPortion() {Pattern = "^ams?$".Compile(), Portion = DayPortion.AM},
+				new PatternDayPortion()  {Pattern = "^pms?$".Compile(), Portion = DayPortion.PM},
+				new PatternDayPortion()  {Pattern = "^mornings?$".Compile(), Portion = DayPortion.MORNING},
+				new PatternDayPortion()  {Pattern = "^afternoons?$".Compile(), Portion = DayPortion.AFTERNOON},
+				new PatternDayPortion()  {Pattern = "^evenings?$".Compile(), Portion = DayPortion.EVENING},
+				new PatternDayPortion()  {Pattern = "^(night|nite)s?$".Compile(), Portion = DayPortion.NIGHT},
+			};
+		public class PatternDayPortion
+		{
+			public Regex Pattern { get; set; }
+			public DayPortion Portion { get; set; }
+		}
+		static readonly List<PatternDay> DayPatterns = new List<PatternDay>
+			{
+				new PatternDay() {Pattern ="^m[ou]n(day)?$".Compile(), Day = DayOfWeek.Monday},
+				new PatternDay() {Pattern = "^t(ue|eu|oo|u|)s(day)?$".Compile(), Day = DayOfWeek.Tuesday},
+				new PatternDay() {Pattern = "^tue$".Compile(), Day = DayOfWeek.Tuesday},
+				new PatternDay() {Pattern = "^we(dnes|nds|nns)day$".Compile(), Day = DayOfWeek.Wednesday},
+				new PatternDay() {Pattern = "^wed$".Compile(), Day = DayOfWeek.Wednesday},
+				new PatternDay() {Pattern = "^th(urs|ers)day$".Compile(), Day = DayOfWeek.Thursday},
+				new PatternDay() {Pattern = "^thu$".Compile(), Day = DayOfWeek.Thursday},
+				new PatternDay() {Pattern = "^fr[iy](day)?$".Compile(), Day = DayOfWeek.Friday},
+				new PatternDay() {Pattern = "^sat(t?[ue]rday)?$".Compile(), Day = DayOfWeek.Saturday},
+				new PatternDay() {Pattern = "^su[nm](day)?$".Compile(), Day = DayOfWeek.Sunday},
+			};
+		public class PatternDay
+		{
+			public Regex Pattern { get; set; }
+			public DayOfWeek Day { get; set; }
+		}
+		static readonly List<PatternMonth> MonthPatterns = new List<PatternMonth>
+			{
+				new PatternMonth() {Pattern = "^jan\\.?(uary)?$".Compile(), Month = MonthName.January},
+				new PatternMonth()  {Pattern = "^feb\\.?(ruary)?$".Compile(), Month = MonthName.February},
+				new PatternMonth()  {Pattern = "^mar\\.?(ch)?$".Compile(), Month = MonthName.March},
+				new PatternMonth()  {Pattern = "^apr\\.?(il)?$".Compile(), Month = MonthName.April},
+				new PatternMonth()  {Pattern = "^may$".Compile(), Month = MonthName.May},
+				new PatternMonth()  {Pattern = "^jun\\.?e?$".Compile(), Month = MonthName.June},
+				new PatternMonth()  {Pattern = "^jul\\.?y?$".Compile(), Month = MonthName.July},
+				new PatternMonth()  {Pattern = "^aug\\.?(ust)?$".Compile(), Month = MonthName.August},
+				new PatternMonth()
+					{
+						Pattern = "^sep\\.?(t\\.?|tember)?$".Compile(),
+						Month = MonthName.September
+					},
+				new PatternMonth()  {Pattern = "^oct\\.?(ober)?$".Compile(), Month = MonthName.October},
+				new PatternMonth()  {Pattern = "^nov\\.?(ember)?$".Compile(), Month = MonthName.November},
+				new PatternMonth()  {Pattern = "^dec\\.?(ember)?$".Compile(), Month = MonthName.December},
+			};
 
-        static readonly List<dynamic> DayPatterns = new List<dynamic>
-            {
-                new {Pattern ="^m[ou]n(day)?$".Compile(), Day = DayOfWeek.Monday},
-                new {Pattern = "^t(ue|eu|oo|u|)s(day)?$".Compile(), Day = DayOfWeek.Tuesday},
-                new {Pattern = "^tue$".Compile(), Day = DayOfWeek.Tuesday},
-                new {Pattern = "^we(dnes|nds|nns)day$".Compile(), Day = DayOfWeek.Wednesday},
-                new {Pattern = "^wed$".Compile(), Day = DayOfWeek.Wednesday},
-                new {Pattern = "^th(urs|ers)day$".Compile(), Day = DayOfWeek.Thursday},
-                new {Pattern = "^thu$".Compile(), Day = DayOfWeek.Thursday},
-                new {Pattern = "^fr[iy](day)?$".Compile(), Day = DayOfWeek.Friday},
-                new {Pattern = "^sat(t?[ue]rday)?$".Compile(), Day = DayOfWeek.Saturday},
-                new {Pattern = "^su[nm](day)?$".Compile(), Day = DayOfWeek.Sunday},
-            };
+		public class PatternMonth
+		{
+			public Regex Pattern { get; set; }
+			public MonthName Month { get; set; }
+		}
+		static readonly List<PatternUnit> UnitPatterns = new List<PatternUnit>
+			{
+				new PatternUnit() { Pattern = "^years?$".Compile(), Unit = typeof(RepeaterYear) },
+				new PatternUnit() { Pattern = "^seasons?$".Compile(), Unit = typeof(RepeaterSeason) },
+				new PatternUnit() { Pattern = "^months?$".Compile(), Unit = typeof(RepeaterMonth) },
+				new PatternUnit() { Pattern = "^fortnights?$".Compile(), Unit = typeof(RepeaterFortnight) },
+				new PatternUnit() { Pattern = "^weeks?$".Compile(), Unit = typeof(RepeaterWeek) },
+				new PatternUnit() { Pattern = "^weekends?$".Compile(), Unit = typeof(RepeaterWeekend) },
+				new PatternUnit() { Pattern = "^days?$".Compile(), Unit = typeof(RepeaterDay) },
+				new PatternUnit() { Pattern = "^hours?$".Compile(), Unit = typeof(RepeaterHour) },
+				new PatternUnit() { Pattern = "^minutes?$".Compile(), Unit = typeof(RepeaterMinute) },
+				new PatternUnit() { Pattern = "^seconds?$".Compile(), Unit = typeof(RepeaterSecond) }
+			};
 
-        static readonly List<dynamic> MonthPatterns = new List<dynamic>
-            {
-                new {Pattern = "^jan\\.?(uary)?$".Compile(), Month = MonthName.January},
-                new {Pattern = "^feb\\.?(ruary)?$".Compile(), Month = MonthName.February},
-                new {Pattern = "^mar\\.?(ch)?$".Compile(), Month = MonthName.March},
-                new {Pattern = "^apr\\.?(il)?$".Compile(), Month = MonthName.April},
-                new {Pattern = "^may$".Compile(), Month = MonthName.May},
-                new {Pattern = "^jun\\.?e?$".Compile(), Month = MonthName.June},
-                new {Pattern = "^jul\\.?y?$".Compile(), Month = MonthName.July},
-                new {Pattern = "^aug\\.?(ust)?$".Compile(), Month = MonthName.August},
-                new
-                    {
-                        Pattern = "^sep\\.?(t\\.?|tember)?$".Compile(),
-                        Month = MonthName.September
-                    },
-                new {Pattern = "^oct\\.?(ober)?$".Compile(), Month = MonthName.October},
-                new {Pattern = "^nov\\.?(ember)?$".Compile(), Month = MonthName.November},
-                new {Pattern = "^dec\\.?(ember)?$".Compile(), Month = MonthName.December},
-            };
-
-        static readonly List<dynamic> UnitPatterns = new List<dynamic>
-            {
-                new { Pattern = "^years?$".Compile(), Unit = typeof(RepeaterYear) },
-                new { Pattern = "^seasons?$".Compile(), Unit = typeof(RepeaterSeason) },
-                new { Pattern = "^months?$".Compile(), Unit = typeof(RepeaterMonth) },
-                new { Pattern = "^fortnights?$".Compile(), Unit = typeof(RepeaterFortnight) },
-                new { Pattern = "^weeks?$".Compile(), Unit = typeof(RepeaterWeek) },
-                new { Pattern = "^weekends?$".Compile(), Unit = typeof(RepeaterWeekend) },
-                new { Pattern = "^days?$".Compile(), Unit = typeof(RepeaterDay) },
-                new { Pattern = "^hours?$".Compile(), Unit = typeof(RepeaterHour) },
-                new { Pattern = "^minutes?$".Compile(), Unit = typeof(RepeaterMinute) },
-                new { Pattern = "^seconds?$".Compile(), Unit = typeof(RepeaterSecond) }
-            };
-    }
+		public class PatternUnit
+		{
+			public Regex Pattern { get; set; }
+			public Type Unit { get; set; }
+		}
+	}
 }
