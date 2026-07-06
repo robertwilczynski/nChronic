@@ -5,15 +5,29 @@ namespace Chronic
 {
     public class SeparatorScanner : ITokenScanner
     {
-        static readonly dynamic[] Patterns = new dynamic[]
+        // Concrete type instead of a dynamic[] of anonymous objects (see GrabberScanner) so the
+        // member access is static and Native-AOT-safe.
+        private class SeparatorMatch
+        {
+            public readonly Regex Pattern;
+            public readonly ITag Tag;
+
+            public SeparatorMatch(Regex pattern, ITag tag)
             {
-                new { Pattern = @"^,$".Compile(), Tag = new SeparatorComma() },
-                new { Pattern = @"^and$".Compile(), Tag = new SeparatorComma() },
-                new { Pattern = @"^(at|@)$".Compile(), Tag = new SeparatorAt() },
-                new { Pattern = @"^in$".Compile(), Tag = new SeparatorIn() },
-                new { Pattern = @"^/$".Compile(), Tag = new SeparatorDate(Separator.Type.Slash) },
-                new { Pattern = @"^-$".Compile(), Tag = new SeparatorDate(Separator.Type.Dash) },
-                new { Pattern = @"^on$".Compile(), Tag = new SeparatorOn() },
+                Pattern = pattern;
+                Tag = tag;
+            }
+        }
+
+        static readonly SeparatorMatch[] Patterns = new SeparatorMatch[]
+            {
+                new SeparatorMatch(@"^,$".Compile(), new SeparatorComma()),
+                new SeparatorMatch(@"^and$".Compile(), new SeparatorComma()),
+                new SeparatorMatch(@"^(at|@)$".Compile(), new SeparatorAt()),
+                new SeparatorMatch(@"^in$".Compile(), new SeparatorIn()),
+                new SeparatorMatch(@"^/$".Compile(), new SeparatorDate(Separator.Type.Slash)),
+                new SeparatorMatch(@"^-$".Compile(), new SeparatorDate(Separator.Type.Dash)),
+                new SeparatorMatch(@"^on$".Compile(), new SeparatorOn()),
             };
 
         public IList<Token> Scan(IList<Token> tokens, Options options)

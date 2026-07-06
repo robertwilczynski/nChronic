@@ -5,11 +5,25 @@ namespace Chronic
 {
     public class PointerScanner : ITokenScanner
     {
-        static readonly dynamic[] Patterns = new dynamic[]
+        // Concrete type instead of a dynamic[] of anonymous objects (see GrabberScanner) so the
+        // member access is static and Native-AOT-safe.
+        private class PointerMatch
+        {
+            public readonly Regex Pattern;
+            public readonly ITag Tag;
+
+            public PointerMatch(Regex pattern, ITag tag)
             {
-                new { Pattern = new Regex(@"\bin\b"), Tag = new Pointer(Pointer.Type.Future) },
-                new { Pattern = new Regex(@"\bfuture\b"), Tag = new Pointer(Pointer.Type.Future) },
-                new { Pattern = new Regex(@"\bpast\b"), Tag = new Pointer(Pointer.Type.Past) },
+                Pattern = pattern;
+                Tag = tag;
+            }
+        }
+
+        static readonly PointerMatch[] Patterns = new PointerMatch[]
+            {
+                new PointerMatch(new Regex(@"\bin\b"), new Pointer(Pointer.Type.Future)),
+                new PointerMatch(new Regex(@"\bfuture\b"), new Pointer(Pointer.Type.Future)),
+                new PointerMatch(new Regex(@"\bpast\b"), new Pointer(Pointer.Type.Past)),
             };
 
         public IList<Token> Scan(IList<Token> tokens, Options options)

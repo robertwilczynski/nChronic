@@ -40,29 +40,16 @@ namespace Chronic.Tags.Repeaters
         static ITag ScanUnits(Token token, Options options)
         {
             ITag tag = null;
-            UnitPatterns.ForEach(item =>
+            foreach (var item in UnitPatterns)
             {
                 if (item.Pattern.IsMatch(token.Value))
                 {
-                    var type = (Type)item.Unit;
-                    var hasCtorWithOptions = type.GetConstructors().Any(ctor =>
-                    {
-                        var parameters = ctor.GetParameters().ToArray();
-                        return
-                            parameters.Length == 1
-                            && parameters.First().ParameterType == typeof(Options);
-                    });
-                    var ctorParameters = hasCtorWithOptions
-                        ? new[] { options }
-                        : new object[0];
-
-                    tag = Activator.CreateInstance(
-                        type,
-                        ctorParameters) as ITag;
-
-                    return;
+                    // Explicit factory instead of typeof(RepeaterX) + Activator.CreateInstance.
+                    // Reflection-based construction over a possibly-trimmed constructor is not
+                    // Native-AOT-safe; a delegate that calls the constructor directly is.
+                    tag = item.Factory(options);
                 }
-            });
+            }
             return tag;
         }
 
@@ -79,42 +66,39 @@ namespace Chronic.Tags.Repeaters
         static ITag ScanDayPortions(Token token, Options options)
         {
             ITag tag = null;
-            DayPortionPatterns.ForEach(item =>
+            foreach (var item in DayPortionPatterns)
+            {
+                if (item.Pattern.IsMatch(token.Value))
                 {
-                    if (item.Pattern.IsMatch(token.Value))
-                    {
-                        tag = new EnumRepeaterDayPortion(item.Portion);
-                        return;
-                    }
-                });
+                    tag = new EnumRepeaterDayPortion(item.Portion);
+                }
+            }
             return tag;
         }
 
         static ITag ScanDayNames(Token token, Options options)
         {
             ITag tag = null;
-            DayPatterns.ForEach(item =>
+            foreach (var item in DayPatterns)
+            {
+                if (item.Pattern.IsMatch(token.Value))
                 {
-                    if (item.Pattern.IsMatch(token.Value))
-                    {
-                        tag = new RepeaterDayName(item.Day);
-                        return;
-                    }
-                });
+                    tag = new RepeaterDayName(item.Day);
+                }
+            }
             return tag;
         }
 
         static ITag ScanMonthNames(Token token, Options options)
         {
             ITag tag = null;
-            MonthPatterns.ForEach(item =>
+            foreach (var item in MonthPatterns)
+            {
+                if (item.Pattern.IsMatch(token.Value))
                 {
-                    if (item.Pattern.IsMatch(token.Value))
-                    {
-                        tag = new RepeaterMonthName(item.Month);
-                        return;
-                    }
-                });
+                    tag = new RepeaterMonthName(item.Month);
+                }
+            }
             return tag;
         }
 
@@ -126,62 +110,90 @@ namespace Chronic.Tags.Repeaters
         static readonly Regex _timePattern =
             @"^\d{1,2}(:?\d{2})?([\.:]?\d{2})?$".Compile();
 
-        static readonly List<dynamic> DayPortionPatterns = new List<dynamic>
+        // Concrete types instead of List<dynamic> of anonymous objects. The `dynamic` member
+        // access (item.Pattern / .Portion / .Day / .Month) dispatched through the DLR, which is
+        // not Native-AOT-safe. UnitPattern additionally replaces the old typeof(RepeaterX) +
+        // Activator.CreateInstance reflection with an explicit factory delegate.
+        private class DayPortionPattern
+        {
+            public readonly Regex Pattern;
+            public readonly DayPortion Portion;
+            public DayPortionPattern(Regex pattern, DayPortion portion) { Pattern = pattern; Portion = portion; }
+        }
+
+        private class DayPattern
+        {
+            public readonly Regex Pattern;
+            public readonly DayOfWeek Day;
+            public DayPattern(Regex pattern, DayOfWeek day) { Pattern = pattern; Day = day; }
+        }
+
+        private class MonthPattern
+        {
+            public readonly Regex Pattern;
+            public readonly MonthName Month;
+            public MonthPattern(Regex pattern, MonthName month) { Pattern = pattern; Month = month; }
+        }
+
+        private class UnitPattern
+        {
+            public readonly Regex Pattern;
+            public readonly Func<Options, ITag> Factory;
+            public UnitPattern(Regex pattern, Func<Options, ITag> factory) { Pattern = pattern; Factory = factory; }
+        }
+
+        static readonly DayPortionPattern[] DayPortionPatterns = new DayPortionPattern[]
             {
-                new {Pattern = "^ams?$".Compile(), Portion = DayPortion.AM},
-                new {Pattern = "^pms?$".Compile(), Portion = DayPortion.PM},
-                new {Pattern = "^mornings?$".Compile(), Portion = DayPortion.MORNING},
-                new {Pattern = "^afternoons?$".Compile(), Portion = DayPortion.AFTERNOON},
-                new {Pattern = "^evenings?$".Compile(), Portion = DayPortion.EVENING},
-                new {Pattern = "^(night|nite)s?$".Compile(), Portion = DayPortion.NIGHT},
+                new DayPortionPattern("^ams?$".Compile(), DayPortion.AM),
+                new DayPortionPattern("^pms?$".Compile(), DayPortion.PM),
+                new DayPortionPattern("^mornings?$".Compile(), DayPortion.MORNING),
+                new DayPortionPattern("^afternoons?$".Compile(), DayPortion.AFTERNOON),
+                new DayPortionPattern("^evenings?$".Compile(), DayPortion.EVENING),
+                new DayPortionPattern("^(night|nite)s?$".Compile(), DayPortion.NIGHT),
             };
 
-        static readonly List<dynamic> DayPatterns = new List<dynamic>
+        static readonly DayPattern[] DayPatterns = new DayPattern[]
             {
-                new {Pattern ="^m[ou]n(day)?$".Compile(), Day = DayOfWeek.Monday},
-                new {Pattern = "^t(ue|eu|oo|u|)s(day)?$".Compile(), Day = DayOfWeek.Tuesday},
-                new {Pattern = "^tue$".Compile(), Day = DayOfWeek.Tuesday},
-                new {Pattern = "^we(dnes|nds|nns)day$".Compile(), Day = DayOfWeek.Wednesday},
-                new {Pattern = "^wed$".Compile(), Day = DayOfWeek.Wednesday},
-                new {Pattern = "^th(urs|ers)day$".Compile(), Day = DayOfWeek.Thursday},
-                new {Pattern = "^thu$".Compile(), Day = DayOfWeek.Thursday},
-                new {Pattern = "^fr[iy](day)?$".Compile(), Day = DayOfWeek.Friday},
-                new {Pattern = "^sat(t?[ue]rday)?$".Compile(), Day = DayOfWeek.Saturday},
-                new {Pattern = "^su[nm](day)?$".Compile(), Day = DayOfWeek.Sunday},
+                new DayPattern("^m[ou]n(day)?$".Compile(), DayOfWeek.Monday),
+                new DayPattern("^t(ue|eu|oo|u|)s(day)?$".Compile(), DayOfWeek.Tuesday),
+                new DayPattern("^tue$".Compile(), DayOfWeek.Tuesday),
+                new DayPattern("^we(dnes|nds|nns)day$".Compile(), DayOfWeek.Wednesday),
+                new DayPattern("^wed$".Compile(), DayOfWeek.Wednesday),
+                new DayPattern("^th(urs|ers)day$".Compile(), DayOfWeek.Thursday),
+                new DayPattern("^thu$".Compile(), DayOfWeek.Thursday),
+                new DayPattern("^fr[iy](day)?$".Compile(), DayOfWeek.Friday),
+                new DayPattern("^sat(t?[ue]rday)?$".Compile(), DayOfWeek.Saturday),
+                new DayPattern("^su[nm](day)?$".Compile(), DayOfWeek.Sunday),
             };
 
-        static readonly List<dynamic> MonthPatterns = new List<dynamic>
+        static readonly MonthPattern[] MonthPatterns = new MonthPattern[]
             {
-                new {Pattern = "^jan\\.?(uary)?$".Compile(), Month = MonthName.January},
-                new {Pattern = "^feb\\.?(ruary)?$".Compile(), Month = MonthName.February},
-                new {Pattern = "^mar\\.?(ch)?$".Compile(), Month = MonthName.March},
-                new {Pattern = "^apr\\.?(il)?$".Compile(), Month = MonthName.April},
-                new {Pattern = "^may$".Compile(), Month = MonthName.May},
-                new {Pattern = "^jun\\.?e?$".Compile(), Month = MonthName.June},
-                new {Pattern = "^jul\\.?y?$".Compile(), Month = MonthName.July},
-                new {Pattern = "^aug\\.?(ust)?$".Compile(), Month = MonthName.August},
-                new
-                    {
-                        Pattern = "^sep\\.?(t\\.?|tember)?$".Compile(),
-                        Month = MonthName.September
-                    },
-                new {Pattern = "^oct\\.?(ober)?$".Compile(), Month = MonthName.October},
-                new {Pattern = "^nov\\.?(ember)?$".Compile(), Month = MonthName.November},
-                new {Pattern = "^dec\\.?(ember)?$".Compile(), Month = MonthName.December},
+                new MonthPattern("^jan\\.?(uary)?$".Compile(), MonthName.January),
+                new MonthPattern("^feb\\.?(ruary)?$".Compile(), MonthName.February),
+                new MonthPattern("^mar\\.?(ch)?$".Compile(), MonthName.March),
+                new MonthPattern("^apr\\.?(il)?$".Compile(), MonthName.April),
+                new MonthPattern("^may$".Compile(), MonthName.May),
+                new MonthPattern("^jun\\.?e?$".Compile(), MonthName.June),
+                new MonthPattern("^jul\\.?y?$".Compile(), MonthName.July),
+                new MonthPattern("^aug\\.?(ust)?$".Compile(), MonthName.August),
+                new MonthPattern("^sep\\.?(t\\.?|tember)?$".Compile(), MonthName.September),
+                new MonthPattern("^oct\\.?(ober)?$".Compile(), MonthName.October),
+                new MonthPattern("^nov\\.?(ember)?$".Compile(), MonthName.November),
+                new MonthPattern("^dec\\.?(ember)?$".Compile(), MonthName.December),
             };
 
-        static readonly List<dynamic> UnitPatterns = new List<dynamic>
+        static readonly UnitPattern[] UnitPatterns = new UnitPattern[]
             {
-                new { Pattern = "^years?$".Compile(), Unit = typeof(RepeaterYear) },
-                new { Pattern = "^seasons?$".Compile(), Unit = typeof(RepeaterSeason) },
-                new { Pattern = "^months?$".Compile(), Unit = typeof(RepeaterMonth) },
-                new { Pattern = "^fortnights?$".Compile(), Unit = typeof(RepeaterFortnight) },
-                new { Pattern = "^weeks?$".Compile(), Unit = typeof(RepeaterWeek) },
-                new { Pattern = "^weekends?$".Compile(), Unit = typeof(RepeaterWeekend) },
-                new { Pattern = "^days?$".Compile(), Unit = typeof(RepeaterDay) },
-                new { Pattern = "^hours?$".Compile(), Unit = typeof(RepeaterHour) },
-                new { Pattern = "^minutes?$".Compile(), Unit = typeof(RepeaterMinute) },
-                new { Pattern = "^seconds?$".Compile(), Unit = typeof(RepeaterSecond) }
+                new UnitPattern("^years?$".Compile(), o => new RepeaterYear()),
+                new UnitPattern("^seasons?$".Compile(), o => new RepeaterSeason()),
+                new UnitPattern("^months?$".Compile(), o => new RepeaterMonth()),
+                new UnitPattern("^fortnights?$".Compile(), o => new RepeaterFortnight()),
+                new UnitPattern("^weeks?$".Compile(), o => new RepeaterWeek(o)),
+                new UnitPattern("^weekends?$".Compile(), o => new RepeaterWeekend()),
+                new UnitPattern("^days?$".Compile(), o => new RepeaterDay()),
+                new UnitPattern("^hours?$".Compile(), o => new RepeaterHour()),
+                new UnitPattern("^minutes?$".Compile(), o => new RepeaterMinute()),
+                new UnitPattern("^seconds?$".Compile(), o => new RepeaterSecond()),
             };
     }
 }
