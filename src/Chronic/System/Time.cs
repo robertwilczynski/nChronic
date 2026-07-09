@@ -68,7 +68,7 @@ namespace Chronic
                 }
 
             }
-            return new DateTime(year, month, day, hour, minute, second);
+            return new DateTime(year, month, day, hour, minute, second, DateTimeKind.Local);
         }
 
         public static bool IsMonthOverflow(int year, int month, int day)
