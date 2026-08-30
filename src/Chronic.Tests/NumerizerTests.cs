@@ -63,6 +63,23 @@ namespace Chronic.Tests
         }
 
         [Fact]
+        public void non_ordinal_numbers_are_parsed_correctly_long_scale()
+        {
+            new object[,]
+                {
+                    {"one milliard", 1000000000},
+                    {"one milliard and one", 1000000001},
+                    {"one billion", 1000000000000},
+                    {"one billion and one", 1000000000001}
+                }.ForEach<string, long>((phrase, expectedResult) =>
+                {
+                    var numerizedString = NumerizeLongScale(expectedResult, phrase);
+                    var number = ConvertToNumberLongScale(expectedResult, numerizedString, phrase);
+                    Assert.Equal(expectedResult, number);
+                });
+        }
+
+        [Fact]
         public void ordinal_numbers_are_parsed_correctly()
         {
             new[,]
@@ -106,12 +123,44 @@ namespace Chronic.Tests
             return value;
         }
 
+        static long ConvertToNumberLongScale(long r, string numerizedString, string s)
+        {
+            long value = 0;
+            if (!Int64.TryParse(numerizedString, out value))
+            {
+                throw new Exception(
+                    String.Format(
+                        "Numerized input '{0}' is expected to be an integral number but it's not. Test case: {1} => {2}",
+                        numerizedString,
+                        s,
+                        r));
+            }
+            return value;
+        }
+
         static string Numerize(int r, string s)
         {
             string numerizedInput = null;
             try
             {
                 numerizedInput = Numerizer.Numerize(s);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(
+                    String.Format(
+                        "Test case: {0} => {1} :: {2}", s, r, ex.Message),
+                    ex);
+            }
+            return numerizedInput;
+        }
+
+        static string NumerizeLongScale(long r, string s)
+        {
+            string numerizedInput = null;
+            try
+            {
+                numerizedInput = Numerizer.Numerize(s, true);
             }
             catch (Exception ex)
             {
